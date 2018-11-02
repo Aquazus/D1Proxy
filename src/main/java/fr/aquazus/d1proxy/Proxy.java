@@ -27,7 +27,7 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.3.0";
+    private String version = "1.3.1";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -91,7 +91,7 @@ public class Proxy {
     }
 
     private void startServer() {
-        Server server = new Server(8192); //TODO Reduce to the default buffer size of 4096 and split if needed
+        Server server = new Server(65536);
         server.bind(configuration.getProxyIp(), configuration.getProxyPort());
         server.onConnect(client -> {
             String clientIp;

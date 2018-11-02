@@ -34,7 +34,7 @@ public class ProxyClient {
     }
 
     private void connectTunnel() {
-        this.server = new Client(8192); //TODO Reduce to the default buffer size of 4096 and split if needed
+        this.server = new Client(65536);
         server.onConnect(() -> {
             System.out.println("[" + ip + "] tunnel opened!");
             ByteArrayOutputStream clientStream = new ByteArrayOutputStream();
