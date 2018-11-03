@@ -34,27 +34,27 @@ public class ProxyClient {
     }
 
     private void connectTunnel() {
-        this.server = new Client(65536);
+        this.server = new Client(proxy.getConfiguration().getProxyBuffer());
         server.onConnect(() -> {
             System.out.println("[" + ip + "] tunnel opened!");
-            ByteArrayOutputStream clientStream = new ByteArrayOutputStream();
+            ByteArrayOutputStream clientStream = new ByteArrayOutputStream(proxy.getConfiguration().getProxyBuffer());
             client.readByteAlways(data -> {
                 if (data == (byte) 0) {
                     String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
                     clientStream.reset();
                     if (proxy.isDebug()) System.out.print("[" + ip + "] --> " + packet);
-                    if (shouldForward(packet) && server.getChannel().isOpen()) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(server);
+                    if (server.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(server);
                     return;
                 }
                 clientStream.write(data);
             });
-            ByteArrayOutputStream gameStream = new ByteArrayOutputStream();
+            ByteArrayOutputStream gameStream = new ByteArrayOutputStream(proxy.getConfiguration().getProxyBuffer());
             server.readByteAlways(data -> {
                 if (data == (byte) 0) {
                     String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
                     gameStream.reset();
                     if (proxy.isDebug()) System.out.println("[" + ip + "] <-- " + packet);
-                    if (shouldForward(packet) && client.getChannel().isOpen()) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(client);
+                    if (client.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(client);
                     return;
                 }
                 gameStream.write(data);

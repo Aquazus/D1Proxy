@@ -11,6 +11,7 @@ public @Data class ProxyConfiguration {
     private boolean proxyDebug;
     private String proxyIp;
     private int proxyPort;
+    private int proxyBuffer;
 
     private String dofusIp;
     private int dofusPort;
@@ -27,6 +28,7 @@ public @Data class ProxyConfiguration {
             this.proxyDebug = Boolean.parseBoolean(properties.getProperty("proxy.debug"));
             this.proxyIp = properties.getProperty("proxy.ip");
             this.proxyPort = Integer.parseInt(properties.getProperty("proxy.port"));
+            this.proxyBuffer = Integer.parseInt(properties.getProperty("proxy.buffer"));
             this.dofusIp = properties.getProperty("dofus.ip");
             this.dofusPort = Integer.parseInt(properties.getProperty("dofus.port"));
             this.mongoIp = properties.getProperty("mongo.ip");

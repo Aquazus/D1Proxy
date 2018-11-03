@@ -27,7 +27,7 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.3.1";
+    private String version = "1.3.2";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -91,7 +91,7 @@ public class Proxy {
     }
 
     private void startServer() {
-        Server server = new Server(65536);
+        Server server = new Server(configuration.getProxyBuffer());
         server.bind(configuration.getProxyIp(), configuration.getProxyPort());
         server.onConnect(client -> {
             String clientIp;
