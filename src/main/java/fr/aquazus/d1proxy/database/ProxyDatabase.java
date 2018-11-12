@@ -11,6 +11,7 @@ public class ProxyDatabase {
     private ProfilesCollection profilesCollection;
 
     public ProxyDatabase(String ip, int port, String database) {
+        System.out.println("Connecting to MongoDB...");
         MongoClient mongoClient = new MongoClient(ip, port);
         MongoDatabase mongoDatabase = mongoClient.getDatabase(database);
         this.mapsCollection = new MapsCollection(mongoDatabase.getCollection("maps"));

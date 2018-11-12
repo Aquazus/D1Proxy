@@ -13,6 +13,7 @@ public class GDMHandler implements PacketHandler {
 
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
+        if (!proxy.isSniffing()) return true;
         String[] extraData = packet.split("\\|");
         int mapId = Integer.parseInt(extraData[1]);
         String mapDate = extraData[2];

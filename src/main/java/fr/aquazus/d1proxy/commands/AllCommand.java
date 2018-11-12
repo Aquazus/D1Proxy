@@ -2,9 +2,12 @@ package fr.aquazus.d1proxy.commands;
 
 import fr.aquazus.d1proxy.Proxy;
 import fr.aquazus.d1proxy.network.ProxyClient;
+import lombok.Getter;
 
 public class AllCommand implements Command {
 
+    @Getter
+    private String description = "Envoie un message aux joueurs connectés au proxy";
     private Proxy proxy;
 
     public AllCommand(Proxy proxy) {

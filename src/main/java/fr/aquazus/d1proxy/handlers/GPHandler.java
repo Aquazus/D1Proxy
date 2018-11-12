@@ -20,6 +20,7 @@ public class GPHandler implements PacketHandler {
 
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
+        if (!proxy.isSniffing()) return true;
         String extraData[] = packet.substring(2).split("\\|");
         if (proxy.getDatabase().getMapsCollection().mapHasFightCells(proxyClient.getCurrentMap())) {
             return true;

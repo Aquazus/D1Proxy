@@ -4,7 +4,7 @@
     <groupId>fr.aquazus</groupId>
     <artifactId>d1proxy</artifactId>
     <packaging>jar</packaging>
-    <version>1.3.2</version>
+    <version>1.4.0</version>
     <name>Dofus 1.29.1 Proxy</name>
 
     <build>
@@ -99,7 +99,7 @@
         <dependency>
             <groupId>org.mongodb</groupId>
             <artifactId>mongo-java-driver</artifactId>
-            <version>3.8.2</version>
+            <version>3.9.0</version>
         </dependency>
     </dependencies>
 </project>

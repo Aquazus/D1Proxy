@@ -2,9 +2,12 @@ package fr.aquazus.d1proxy.commands;
 
 import fr.aquazus.d1proxy.Proxy;
 import fr.aquazus.d1proxy.network.ProxyClient;
+import lombok.Getter;
 
 public class AboutCommand implements Command {
 
+    @Getter
+    private String description = "Affiche les informations sur le proxy";
     private Proxy proxy;
 
     public AboutCommand(Proxy proxy) {

@@ -27,17 +27,17 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.3.2";
+    private String version = "1.4.0";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
     private ProxyDatabase database;
     @Getter
-    private boolean debug;
+    private boolean debug, sniffing;
     @Getter
-    private HashMap<String, PacketHandler> handlers;
+    private Map<String, PacketHandler> handlers;
     @Getter
-    private HashMap<String, Command> commands;
+    private Map<String, Command> commands;
     @Getter
     private List<ProxyClient> clients;
     @Getter
@@ -49,29 +49,26 @@ public class Proxy {
         startTime = System.currentTimeMillis();
         clients = Collections.synchronizedList(new ArrayList<>());
         exchangeCache = Collections.synchronizedMap(new HashMap<>());
-        System.out.println("Registering handlers...");
-        registerHandlers();
-        System.out.println("Registering commands...");
-        registerCommands();
-        System.out.println(handlers.size() + " handlers registered!");
         try {
             configuration = new ProxyConfiguration();
             configuration.readFile("d1proxy.properties");
             debug = configuration.isProxyDebug();
+            sniffing = configuration.isProxySniffing();
         } catch (Exception ex) {
             System.out.println("An error occurred while reading the configuration file. Aborting startup.");
             ex.printStackTrace();
             System.exit(0);
         }
-        System.out.println("Connecting to MongoDB...");
+        registerHandlers();
+        registerCommands();
         if (debug) Logger.getLogger("org.mongodb.driver").setLevel(Level.ALL);
         database = new ProxyDatabase(configuration.getMongoIp(), configuration.getMongoPort(), configuration.getMongoDatabase());
-        System.out.println("Starting proxy server...");
         startServer();
     }
 
     private void registerHandlers() {
-        handlers = new HashMap<>();
+        System.out.println("Registering handlers...");
+        handlers = Collections.synchronizedMap(new HashMap<>());
         handlers.put("AXK", new AXKHandler(this)); //<-- Selected server address + client ticket
         handlers.put("Im", new ImHandler(this)); //<-- Ingame message from lang files
         handlers.put("BM", new BMHandler(this)); //--> Chat message
@@ -79,18 +76,22 @@ public class Proxy {
         handlers.put("GDM", new GDMHandler(this)); //<-- Map data
         handlers.put("Ax", new AxHandler()); //--> Cache OK, request character list
         handlers.put("GP", new GPHandler(this)); //<-- Fight cells & team id
+        System.out.println(handlers.size() + " handlers registered!");
     }
 
     private void registerCommands() {
-        commands = new HashMap<>();
-        commands.put("help", new HelpCommand());
+        System.out.println("Registering commands...");
+        commands = Collections.synchronizedMap(new HashMap<>());
+        commands.put("help", new HelpCommand(this));
         commands.put("about", new AboutCommand(this));
         commands.put("all", new AllCommand(this));
-        commands.put("mapinfo", new MapinfoCommand(this));
+        if (sniffing) commands.put("mapinfo", new MapinfoCommand(this));
         commands.put("profile", new ProfileCommand(this));
+        System.out.println(commands.size() + " commands registered!");
     }
 
     private void startServer() {
+        System.out.println("Starting proxy server...");
         Server server = new Server(configuration.getProxyBuffer());
         server.bind(configuration.getProxyIp(), configuration.getProxyPort());
         server.onConnect(client -> {

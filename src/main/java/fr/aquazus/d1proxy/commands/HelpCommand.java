@@ -1,15 +1,26 @@
 package fr.aquazus.d1proxy.commands;
 
+import fr.aquazus.d1proxy.Proxy;
 import fr.aquazus.d1proxy.network.ProxyClient;
+import lombok.Getter;
+
+import java.util.Map;
 
 public class HelpCommand implements Command {
+
+    @Getter
+    private String description = "Affiche la liste des commandes";
+    private Proxy proxy;
+
+    public HelpCommand(Proxy proxy) {
+        this.proxy = proxy;
+    }
     @Override
     public void execute(ProxyClient proxyClient, String args) {
-        proxyClient.sendMessage("<b><u>Commandes :</u></b>\n" +
-                "<b>.help</b> - Affiche la liste des commandes\n" +
-                "<b>.about</b> - Affiche les informations sur le proxy\n" +
-                "<b>.all</b> - Envoie un message aux joueurs connectés au proxy\n" +
-                "<b>.mapinfo</b> - Affiche les informations sur la map actuelle\n" +
-                "<b>.profile</b> - Affiche votre profil");
+        StringBuilder helpBuilder = new StringBuilder("<b><u>Commandes :</u></b>");
+        for (Map.Entry<String, Command> command : proxy.getCommands().entrySet()) {
+            helpBuilder.append("\n<b>." + command.getKey() + "</b> - " + command.getValue().getDescription());
+        }
+        proxyClient.sendMessage(helpBuilder.toString());
     }
 }
