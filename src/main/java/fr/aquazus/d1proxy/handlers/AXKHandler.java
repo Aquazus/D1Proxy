@@ -20,7 +20,7 @@ public class AXKHandler implements PacketHandler {
 
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
-        System.out.println("[" + proxyClient.getIp() + "] Intercepted AXK. Forging and flushing a new one!");
+        proxyClient.log("Intercepted AXK. Forging and flushing a new one!");
         proxy.getExchangeCache().put(proxyClient.getIp(), decodeAXK(packet));
         String newPacket = "AXK" + encodeAXK(proxy.getConfiguration().getProxyIp() + ":" + proxy.getConfiguration().getProxyPort()) + packet.substring(14);
         Packet.builder().putBytes(newPacket.getBytes()).putByte(0).writeAndFlush(proxyClient.getClient());

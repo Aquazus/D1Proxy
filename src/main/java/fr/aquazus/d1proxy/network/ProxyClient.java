@@ -36,13 +36,13 @@ public class ProxyClient {
     private void connectTunnel() {
         this.server = new Client(proxy.getConfiguration().getProxyBuffer());
         server.onConnect(() -> {
-            System.out.println("[" + ip + "] tunnel opened!");
+            this.log("tunnel opened!");
             ByteArrayOutputStream clientStream = new ByteArrayOutputStream(proxy.getConfiguration().getProxyBuffer());
             client.readByteAlways(data -> {
                 if (data == (byte) 0) {
                     String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
                     clientStream.reset();
-                    if (proxy.isDebug()) System.out.print("[" + ip + "] --> " + packet);
+                    if (proxy.isDebug()) this.log("--> " + packet);
                     if (server.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(server);
                     return;
                 }
@@ -53,7 +53,7 @@ public class ProxyClient {
                 if (data == (byte) 0) {
                     String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
                     gameStream.reset();
-                    if (proxy.isDebug()) System.out.println("[" + ip + "] <-- " + packet);
+                    if (proxy.isDebug()) this.log("<-- " + packet);
                     if (client.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(client);
                     return;
                 }
@@ -61,15 +61,15 @@ public class ProxyClient {
             });
         });
         client.postDisconnect(() -> {
-            System.out.println("[" + ip + "] disconnected!");
+            this.log("disconnected!");
             this.disconnect();
         });
         server.postDisconnect(() -> {
-            System.out.println("[" + ip + "] tunnel closed!");
+            this.log("tunnel closed!");
             this.disconnect();
         });
         if (proxy.getExchangeCache().containsKey(ip)) {
-            System.out.println("[" + ip + "] Found game address in exchange cache, tunneling to the right server...");
+            this.log("Found game address in exchange cache, tunneling to the right server...");
             String address[] = proxy.getExchangeCache().get(ip).split(":");
             proxy.getExchangeCache().remove(ip);
             server.connect(address[0], Integer.parseInt(address[1]));
@@ -121,6 +121,14 @@ public class ProxyClient {
 
     public void sendMessage(String message) {
         if (state == ProxyClientState.INGAME && client.getChannel().isOpen()) Packet.builder().putBytes(("cs<font color='#2C49D7'>" + message + "</font>").getBytes(StandardCharsets.UTF_8)).putByte(0).writeAndFlush(client);
+    }
+
+    public void log(String message) {
+        if (message.startsWith("-->")) {
+            System.out.print("[" + ip + (username == null ? "" : " - " + username) + "] " + message);
+        } else {
+            System.out.println("[" + ip + (username == null ? "" : " - " + username) + "] " + message);
+        }
     }
 }
 

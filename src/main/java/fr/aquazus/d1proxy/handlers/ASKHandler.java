@@ -14,10 +14,10 @@ public class ASKHandler implements PacketHandler {
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
         String[] extraData = packet.split("\\|");
-        System.out.println("[" + proxyClient.getIp() + "] Setting username as: " + extraData[2]);
+        proxyClient.log("Setting username as: " + extraData[2]);
         proxyClient.setUsername(extraData[2]);
         if (proxy.getDatabase().getProfilesCollection().profileExists(extraData[2])) {
-            proxy.sendMessage("<b>" + extraData[2] + "</b> vient de se connecter via le proxy.");
+            proxy.sendMessage("<b>" + extraData[2] + "</b> vient de se connecter à D1Proxy.");
         } else {
             proxy.getDatabase().getProfilesCollection().insertNewProfile(extraData[2]);
             proxy.sendMessage("<b>" + extraData[2] + "</b> est nouveau sur D1Proxy, bienvenue !");
