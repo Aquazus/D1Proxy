@@ -9,9 +9,9 @@ import static com.mongodb.client.model.Filters.*;
 
 public class MapsCollection {
 
-    private MongoCollection collection;
+    private MongoCollection<Document> collection;
 
-    public MapsCollection(MongoCollection collection) {
+    MapsCollection(MongoCollection<Document> collection) {
         this.collection = collection;
     }
 

@@ -8,23 +8,23 @@ import java.util.Properties;
 
 public @Data class ProxyConfiguration {
 
-    private boolean proxyDebug;
-    private String proxyIp;
-    private int proxyPort;
-    private int proxyBuffer;
-    private boolean proxySniffing;
+    protected boolean proxyDebug;
+    protected String proxyIp;
+    protected int proxyPort;
+    protected int proxyBuffer;
+    protected boolean proxySniffing;
 
-    private String dofusIp;
-    private int dofusPort;
+    protected String dofusIp;
+    protected int dofusPort;
 
-    private String mongoIp;
-    private int mongoPort;
-    private String mongoDatabase;
+    protected String mongoIp;
+    protected int mongoPort;
+    protected String mongoDatabase;
 
-    public void readFile(String fileName) throws IOException, NumberFormatException {
-        System.out.println("Reading " + fileName + "...");
+    void read() throws IOException, NumberFormatException {
+        System.out.println("Reading d1proxy.properties...");
         Properties properties = new Properties();
-        try (FileInputStream fileInputStream = new FileInputStream(fileName)) {
+        try (FileInputStream fileInputStream = new FileInputStream("d1proxy.properties")) {
             properties.load(fileInputStream);
             this.proxyDebug = Boolean.parseBoolean(properties.getProperty("proxy.debug"));
             this.proxyIp = properties.getProperty("proxy.ip");

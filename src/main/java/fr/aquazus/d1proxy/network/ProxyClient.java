@@ -17,13 +17,18 @@ public class ProxyClient {
     private ProxyClientState state;
     @Getter
     private Client client;
+    @Getter
     private Client server;
     @Getter
     private String ip;
     @Getter @Setter
+    private int characterId;
+    @Getter @Setter
     private String username;
     @Getter @Setter
     private int currentMap;
+    @Getter @Setter
+    private boolean autoSkip;
 
     public ProxyClient(Proxy proxy, Client client, String ip) {
         this.proxy = proxy;

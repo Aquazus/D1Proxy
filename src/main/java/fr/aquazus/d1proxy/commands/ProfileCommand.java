@@ -27,11 +27,14 @@ public class ProfileCommand implements Command {
     public void execute(ProxyClient proxyClient, String args) {
         Document profile = proxy.getDatabase().getProfilesCollection().getProfile(proxyClient.getUsername());
         StringBuilder messageBuilder = new StringBuilder("<b><u>Votre profil</u></b>");
-        messageBuilder.append("\n<b>Première connexion le</b> : " + dateFormat.format(new Date((long) profile.get("joined"))));
+        messageBuilder.append("\n<b>Première connexion le</b> : ");
+        messageBuilder.append(dateFormat.format(new Date((long) profile.get("joined"))));
         if (proxy.isSniffing()) {
             long mapsCount = proxy.getDatabase().getMapsCollection().countMaps(Filters.eq("discoverer", proxyClient.getUsername()));
-            messageBuilder.append("\n<b>Maps découvertes</b> : " + mapsCount);
-            messageBuilder.append("\n<b>Cellules de combat découvertes</b> : " + (profile.get("fightCells") == null ? "0" : profile.get("fightCells")));
+            messageBuilder.append("\n<b>Maps découvertes</b> : ");
+            messageBuilder.append(mapsCount);
+            messageBuilder.append("\n<b>Cellules de combat découvertes</b> : ");
+            messageBuilder.append((profile.get("fightCells") == null ? "0" : profile.get("fightCells")));
         }
         proxyClient.sendMessage(messageBuilder.toString());
     }

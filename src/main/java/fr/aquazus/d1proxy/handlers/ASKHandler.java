@@ -14,6 +14,7 @@ public class ASKHandler implements PacketHandler {
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
         String[] extraData = packet.split("\\|");
+        proxyClient.setCharacterId(Integer.parseInt(extraData[1]));
         proxyClient.log("Setting username as: " + extraData[2]);
         proxyClient.setUsername(extraData[2]);
         if (proxy.getDatabase().getProfilesCollection().profileExists(extraData[2])) {

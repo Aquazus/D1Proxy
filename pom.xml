@@ -4,8 +4,8 @@
     <groupId>fr.aquazus</groupId>
     <artifactId>d1proxy</artifactId>
     <packaging>jar</packaging>
-    <version>1.4.1</version>
-    <name>Dofus 1.29.1 Proxy</name>
+    <version>1.5.0</version>
+    <name>D1Proxy</name>
 
     <build>
         <plugins>

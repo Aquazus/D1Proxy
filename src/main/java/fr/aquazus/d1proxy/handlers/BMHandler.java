@@ -1,16 +1,9 @@
 package fr.aquazus.d1proxy.handlers;
 
-import fr.aquazus.d1proxy.Proxy;
 import fr.aquazus.d1proxy.network.ProxyClient;
 import simplenet.packet.Packet;
 
 public class BMHandler implements PacketHandler {
-
-    private Proxy proxy;
-
-    public BMHandler(Proxy proxy) {
-        this.proxy = proxy;
-    }
 
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {

@@ -8,9 +8,9 @@ import static com.mongodb.client.model.Filters.*;
 
 public class ProfilesCollection {
 
-    private MongoCollection collection;
+    private MongoCollection<Document> collection;
 
-    public ProfilesCollection(MongoCollection collection) {
+    ProfilesCollection(MongoCollection<Document> collection) {
         this.collection = collection;
     }
 

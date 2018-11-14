@@ -17,7 +17,7 @@ public class Proxy {
 
     private static Proxy instance = null;
 
-    public static Proxy getInstance() {
+    private static Proxy getInstance() {
         if (instance == null) instance = new Proxy();
         return instance;
     }
@@ -27,7 +27,7 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.4.1";
+    private String version = "1.5.0";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -51,7 +51,7 @@ public class Proxy {
         exchangeCache = Collections.synchronizedMap(new HashMap<>());
         try {
             configuration = new ProxyConfiguration();
-            configuration.readFile("d1proxy.properties");
+            configuration.read();
             debug = configuration.isProxyDebug();
             sniffing = configuration.isProxySniffing();
         } catch (Exception ex) {
@@ -71,11 +71,12 @@ public class Proxy {
         handlers = Collections.synchronizedMap(new HashMap<>());
         handlers.put("AXK", new AXKHandler(this)); //<-- Selected server address + client ticket
         handlers.put("Im", new ImHandler(this)); //<-- Ingame message from lang files
-        handlers.put("BM", new BMHandler(this)); //--> Chat message
+        handlers.put("BM", new BMHandler()); //--> Chat message
         handlers.put("ASK", new ASKHandler(this)); //<-- Character name
         handlers.put("GDM", new GDMHandler(this)); //<-- Map data
         handlers.put("Ax", new AxHandler()); //--> Cache OK, request character list
         handlers.put("GP", new GPHandler(this)); //<-- Fight cells & team id
+        handlers.put("GTS", new GTSHandler(this)); //<-- Game Turn Start
         System.out.println(handlers.size() + " handlers registered!");
     }
 
@@ -87,6 +88,7 @@ public class Proxy {
         commands.put("all", new AllCommand(this));
         if (sniffing) commands.put("mapinfo", new MapinfoCommand(this));
         commands.put("profile", new ProfileCommand(this));
+        commands.put("autoskip", new AutoskipCommand());
         System.out.println(commands.size() + " commands registered!");
     }
 
