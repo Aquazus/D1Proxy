@@ -101,7 +101,7 @@
 Reach out to me at one of the following places!
 
 - Twitter at <a href="http://twitter.com/Aquazus" target="_blank">`@Aquazus`</a>
-- Discord at `Aquazus#1337`
+- Discord at <a href="https://discord.gg/xUEpc5N" target="_blank">`discord.gg/xUEpc5N`</a>
 
 ---
 
