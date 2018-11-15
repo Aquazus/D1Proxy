@@ -111,6 +111,8 @@ Reach out to me at one of the following places!
 
 [![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Aquazus/)
 
+Bitcoin: `1JeSvkGhB6k81kDkUvxTizQTrf88P6fHaR`
+
 
 ---
 
