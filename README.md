@@ -4,9 +4,9 @@
 
 > A simple yet powerful Java 11 TCP MITM proxy for Dofus 1.29.1
 
-[![Maintainability](https://api.codeclimate.com/v1/badges/f087b0e25f3628654f55/maintainability)](https://codeclimate.com/github/Aquazus/D1Proxy/maintainability) [![Github Issues](http://githubbadges.herokuapp.com/Aquazus/D1Proxy/issues.svg?style=flat-square)](https://github.com/Aquazus/D1Proxy/issues) [![Pending Pull-Requests](http://githubbadges.herokuapp.com/Aquazus/D1Proxy/pulls.svg?style=flat-square)](https://github.com/Aquazus/D1Proxy/pulls) [![License](https://img.shields.io/github/license/Aquazus/D1Proxy.svg?style=flat-square)](LICENSE)
+[![Maintainability](https://api.codeclimate.com/v1/badges/f087b0e25f3628654f55/maintainability)](https://codeclimate.com/github/Aquazus/D1Proxy/maintainability) [![Dependencies](https://img.shields.io/librariesio/github/Aquazus/D1Proxy.svg?style=flat-square)](http://libraries.io/github/Aquazus/D1Proxy) [![Github Issues](https://img.shields.io/github/issues-raw/Aquazus/D1Proxy.svg?style=flat-square)](https://github.com/Aquazus/D1Proxy/issues) [![Pending Pull-Requests](https://img.shields.io/github/issues-pr-raw/Aquazus/D1Proxy.svg?style=flat-square)](https://github.com/Aquazus/D1Proxy/pulls) [![License](https://img.shields.io/github/license/Aquazus/D1Proxy.svg?style=flat-square)](LICENSE)
 
-[![INSERT YOUR GRAPHIC HERE](http://i.imgur.com/Msen5Cs.png)]()
+[![D1Proxy](http://i.imgur.com/Msen5Cs.png)]()
 
 ---
 
@@ -47,7 +47,7 @@
 ## Features
 
 - **6 commands**
-- (currently) **Undetected** by Ankama
+- (currently) **Undetected** by Ankama (but use at your own risk)
 - **Community-based** data sniffing
 - **Quality of Life** features to improve players experience
 
@@ -107,7 +107,7 @@ Reach out to me at one of the following places!
 
 ## Donations
 
-![Liberapay receiving](http://img.shields.io/liberapay/receives/Aquazus.svg?logo=liberapay) ![Liberapay patrons](http://img.shields.io/liberapay/patrons/Aquazus.svg?logo=liberapay)
+[![Liberapay receiving](http://img.shields.io/liberapay/receives/Aquazus.svg?logo=liberapay)](https://liberapay.com/Aquazus/) [![Liberapay patrons](http://img.shields.io/liberapay/patrons/Aquazus.svg?logo=liberapay)](https://liberapay.com/Aquazus/)
 
 [![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Aquazus/)
 
