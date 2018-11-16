@@ -27,7 +27,7 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.5.0";
+    private String version = "1.5.1";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -76,7 +76,7 @@ public class Proxy {
         handlers.put("GDM", new GDMHandler(this)); //<-- Map data
         handlers.put("Ax", new AxHandler()); //--> Cache OK, request character list
         handlers.put("GP", new GPHandler(this)); //<-- Fight cells & team id
-        handlers.put("GTS", new GTSHandler(this)); //<-- Game Turn Start
+        handlers.put("GTS", new GTSHandler()); //<-- Game Turn Start
         System.out.println(handlers.size() + " handlers registered!");
     }
 

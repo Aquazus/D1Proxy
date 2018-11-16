@@ -7,7 +7,6 @@ import org.bson.Document;
 
 import java.text.SimpleDateFormat;
 import java.util.Date;
-import java.util.TimeZone;
 
 public class MapinfoCommand implements Command {
 
@@ -19,7 +18,7 @@ public class MapinfoCommand implements Command {
     public MapinfoCommand(Proxy proxy) {
         this.proxy = proxy;
         this.dateFormat = new SimpleDateFormat("dd/MM/YY à HH:mm:ss");
-        this.dateFormat.setTimeZone(TimeZone.getTimeZone("Europe/Paris"));
+        this.dateFormat.setTimeZone(proxy.getConfiguration().getProxyTimeZone());
     }
 
     @Override
