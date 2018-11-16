@@ -4,6 +4,7 @@ import lombok.Data;
 
 import java.io.FileInputStream;
 import java.io.IOException;
+import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.TimeZone;
 
@@ -15,6 +16,7 @@ public @Data class ProxyConfiguration {
     protected int proxyBuffer;
     protected boolean proxySniffing;
     protected TimeZone proxyTimeZone;
+    protected SimpleDateFormat fullDateFormat;
 
     protected String dofusIp;
     protected int dofusPort;
@@ -34,6 +36,8 @@ public @Data class ProxyConfiguration {
             this.proxyBuffer = Integer.parseInt(properties.getProperty("proxy.buffer"));
             this.proxySniffing = Boolean.parseBoolean(properties.getProperty("proxy.sniffing"));
             this.proxyTimeZone = TimeZone.getTimeZone(properties.getProperty("proxy.timezone"));
+            this.fullDateFormat = new SimpleDateFormat("dd/MM/YY à HH:mm:ss");
+            this.fullDateFormat.setTimeZone(this.proxyTimeZone);
             this.dofusIp = properties.getProperty("dofus.ip");
             this.dofusPort = Integer.parseInt(properties.getProperty("dofus.port"));
             this.mongoIp = properties.getProperty("mongo.ip");
