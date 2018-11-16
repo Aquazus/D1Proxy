@@ -3,6 +3,7 @@ package fr.aquazus.d1proxy;
 import fr.aquazus.d1proxy.commands.*;
 import fr.aquazus.d1proxy.database.ProxyDatabase;
 import fr.aquazus.d1proxy.handlers.*;
+import fr.aquazus.d1proxy.network.ProxyCipher;
 import fr.aquazus.d1proxy.network.ProxyClient;
 import fr.aquazus.d1proxy.network.ProxyClientState;
 import lombok.Getter;
@@ -30,6 +31,8 @@ public class Proxy {
     private String version = "1.5.2-dev";
     @Getter
     private ProxyConfiguration configuration;
+    @Getter
+    private ProxyCipher proxyCipher;
     @Getter
     private ProxyDatabase database;
     @Getter
@@ -59,6 +62,7 @@ public class Proxy {
             ex.printStackTrace();
             System.exit(0);
         }
+        proxyCipher = new ProxyCipher();
         registerHandlers();
         registerCommands();
         if (debug) Logger.getLogger("org.mongodb.driver").setLevel(Level.ALL);
