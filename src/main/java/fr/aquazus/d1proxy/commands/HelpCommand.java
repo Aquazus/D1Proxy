@@ -15,6 +15,7 @@ public class HelpCommand implements Command {
     public HelpCommand(Proxy proxy) {
         this.proxy = proxy;
     }
+
     @Override
     public void execute(ProxyClient proxyClient, String args) {
         StringBuilder helpBuilder = new StringBuilder("<b><u>Commandes :</u></b>");

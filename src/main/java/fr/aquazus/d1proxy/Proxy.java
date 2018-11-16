@@ -28,7 +28,7 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.5.2";
+    private String version = "1.6.0-dev";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -93,6 +93,7 @@ public class Proxy {
         if (sniffing) commands.put("mapinfo", new MapinfoCommand(this));
         commands.put("profile", new ProfileCommand(this));
         commands.put("autoskip", new AutoskipCommand());
+        commands.put("master", new MasterCommand());
         System.out.println(commands.size() + " commands registered!");
     }
 
