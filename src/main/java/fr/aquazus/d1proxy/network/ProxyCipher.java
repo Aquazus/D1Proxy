@@ -1,8 +1,6 @@
 package fr.aquazus.d1proxy.network;
 
-import java.util.ArrayList;
-import java.util.Arrays;
-import java.util.List;
+import java.util.*;
 import java.util.stream.Collectors;
 import java.util.stream.IntStream;
 
@@ -54,6 +52,18 @@ public class ProxyCipher {
             cells.add(cellId);
         }
         return cells;
+    }
+
+    public LinkedHashMap<Integer, Integer> extractFullPath(String compressedData, int mapSize) {
+        LinkedHashMap<Integer, Integer> fullPath = new LinkedHashMap<>();
+        char[] data = compressedData.toCharArray();
+        for (int i = 0; i < data.length; i = i + 3) {
+            int cellId = (decode64((data[i + 1])) & 15) << 6 | decode64(data[i + 2]);
+            int direction = decode64(data[i]);
+            if (cellId < 0 || cellId > mapSize) return null;
+            fullPath.put(cellId, direction);
+        }
+        return fullPath;
     }
 
     private int decode64(char data) {

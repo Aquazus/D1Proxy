@@ -93,7 +93,6 @@ public class Proxy {
         if (sniffing) commands.put("mapinfo", new MapinfoCommand(this));
         commands.put("profile", new ProfileCommand(this));
         commands.put("autoskip", new AutoskipCommand());
-        commands.put("master", new MasterCommand());
         System.out.println(commands.size() + " commands registered!");
     }
 
