@@ -129,12 +129,7 @@ public class ProxyClient {
     }
 
     public void log(String message) {
-        String logFormat = "[" + ip + (username == null ? "" : " - " + username) + "] " + message;
-        if (message.startsWith("-->")) {
-            System.out.print(logFormat);
-        } else {
-            System.out.println(logFormat);
-        }
+        System.out.print("[" + ip + (username == null ? "" : " - " + username) + "] " + message + (message.startsWith("-->") ? "" : "\n"));
     }
 }
 
