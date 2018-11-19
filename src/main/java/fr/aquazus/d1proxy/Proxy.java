@@ -71,8 +71,8 @@ public class Proxy {
         if (debug) Logger.getLogger("org.mongodb.driver").setLevel(Level.ALL);
         database = new ProxyDatabase(configuration.getMongoIp(), configuration.getMongoPort(), configuration.getMongoDatabase());
         pluginManager = new ProxyPluginManager(this);
-        pluginManager.loadPlugins();
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pluginManager.stopPlugins()));
+        pluginManager.loadPlugins();
         startServer();
     }
 
