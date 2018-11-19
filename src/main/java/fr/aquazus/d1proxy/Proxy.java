@@ -27,7 +27,7 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.6.0-dev";
+    private String version = "1.6.0";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
