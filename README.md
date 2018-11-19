@@ -50,6 +50,7 @@
 - (currently) **Undetected** by Ankama (but use at your own risk)
 - **Community-based** data sniffing
 - **Quality of Life** features to improve players experience
+- A **Plugin system** *(WIP)*
 
 ---
 
@@ -107,7 +108,7 @@ Reach out to me at one of the following places!
 
 ## Donations
 
-[![Liberapay receiving](http://img.shields.io/liberapay/receives/Aquazus.svg?logo=liberapay)](https://liberapay.com/Aquazus/) [![Liberapay patrons](http://img.shields.io/liberapay/patrons/Aquazus.svg?logo=liberapay)](https://liberapay.com/Aquazus/)
+[![Liberapay receiving](http://img.shields.io/liberapay/receives/Aquazus.svg?logo=liberapay&style=flat-square)](https://liberapay.com/Aquazus/) [![Liberapay patrons](http://img.shields.io/liberapay/patrons/Aquazus.svg?logo=liberapay&style=flat-square)](https://liberapay.com/Aquazus/)
 
 [![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Aquazus/)
 
