@@ -12,8 +12,6 @@ import lombok.Synchronized;
 import simplenet.Server;
 
 import java.util.*;
-import java.util.logging.Level;
-import java.util.logging.Logger;
 
 public class Proxy {
 
@@ -47,7 +45,6 @@ public class Proxy {
     @Getter
     private Map<String, String> exchangeCache; //TODO: Maybe improve the exchange cache system...
     private long startTime;
-    @Getter
     private ProxyPluginManager pluginManager;
 
     private void init() {
@@ -68,7 +65,6 @@ public class Proxy {
         proxyCipher = new ProxyCipher();
         registerHandlers();
         registerCommands();
-        if (debug) Logger.getLogger("org.mongodb.driver").setLevel(Level.ALL);
         database = new ProxyDatabase(configuration.getMongoIp(), configuration.getMongoPort(), configuration.getMongoDatabase());
         pluginManager = new ProxyPluginManager(this);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pluginManager.stopPlugins()));
