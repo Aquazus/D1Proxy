@@ -132,5 +132,3 @@ public class ProxyClient {
         System.out.print("[" + ip + (username == null ? "" : " - " + username) + "] " + message + (message.startsWith("-->") ? "" : "\n"));
     }
 }
-
-
