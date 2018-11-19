@@ -6,6 +6,7 @@ import fr.aquazus.d1proxy.handlers.*;
 import fr.aquazus.d1proxy.network.ProxyCipher;
 import fr.aquazus.d1proxy.network.ProxyClient;
 import fr.aquazus.d1proxy.network.ProxyClientState;
+import fr.aquazus.d1proxy.plugins.ProxyPluginManager;
 import lombok.Getter;
 import lombok.Synchronized;
 import simplenet.Server;
@@ -46,6 +47,8 @@ public class Proxy {
     @Getter
     private Map<String, String> exchangeCache; //TODO: Maybe improve the exchange cache system...
     private long startTime;
+    @Getter
+    private ProxyPluginManager pluginManager;
 
     private void init() {
         System.out.println("Initializing D1Proxy...");
@@ -67,6 +70,9 @@ public class Proxy {
         registerCommands();
         if (debug) Logger.getLogger("org.mongodb.driver").setLevel(Level.ALL);
         database = new ProxyDatabase(configuration.getMongoIp(), configuration.getMongoPort(), configuration.getMongoDatabase());
+        pluginManager = new ProxyPluginManager(this);
+        pluginManager.loadPlugins();
+        Runtime.getRuntime().addShutdownHook(new Thread(() -> pluginManager.stopPlugins()));
         startServer();
     }
 
