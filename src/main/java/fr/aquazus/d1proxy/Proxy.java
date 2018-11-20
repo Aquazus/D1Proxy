@@ -142,7 +142,7 @@ public class Proxy {
         if (handlers.containsKey(packetId)) {
             handlers.get(packetId).add(handler);
         } else {
-            handlers.put(packetId, new ArrayList<>(List.of(handler)));
+            handlers.put(packetId, Collections.synchronizedList(new ArrayList<>(List.of(handler))));
         }
     }
 }
