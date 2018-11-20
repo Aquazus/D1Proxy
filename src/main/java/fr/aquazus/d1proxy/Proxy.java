@@ -9,10 +9,12 @@ import fr.aquazus.d1proxy.network.ProxyClientState;
 import fr.aquazus.d1proxy.plugins.ProxyPluginManager;
 import lombok.Getter;
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
 import simplenet.Server;
 
 import java.util.*;
 
+@Slf4j
 public class Proxy {
 
     private static Proxy instance = null;
@@ -27,15 +29,13 @@ public class Proxy {
     }
 
     @Getter
-    private String version = "1.6.1-dev";
+    private final String version = "1.6.1-dev";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
     private ProxyCipher proxyCipher;
     @Getter
     private ProxyDatabase database;
-    @Getter
-    private boolean debug, sniffing;
     @Getter
     private Map<String, List<PacketHandler>> handlers;
     @Getter
@@ -48,17 +48,15 @@ public class Proxy {
     private ProxyPluginManager pluginManager;
 
     private void init() {
-        System.out.println("Initializing D1Proxy...");
+        log.info("Initializing D1Proxy...");
         startTime = System.currentTimeMillis();
         clients = Collections.synchronizedList(new ArrayList<>());
         exchangeCache = Collections.synchronizedMap(new HashMap<>());
         try {
             configuration = new ProxyConfiguration();
             configuration.read();
-            debug = configuration.isProxyDebug();
-            sniffing = configuration.isProxySniffing();
         } catch (Exception ex) {
-            System.out.println("An error occurred while reading the configuration file. Aborting startup.");
+            log.error("An error occurred while reading the configuration file. Aborting startup.");
             ex.printStackTrace();
             System.exit(0);
         }
@@ -73,7 +71,7 @@ public class Proxy {
     }
 
     private void registerHandlers() {
-        System.out.println("Registering handlers...");
+        log.info("Registering handlers...");
         handlers = Collections.synchronizedMap(new HashMap<>());
         addHandler("AXK", new AXKHandler(this)); //<-- Selected server address + client ticket
         addHandler("Im", new ImHandler(this)); //<-- Ingame message from lang files
@@ -83,23 +81,23 @@ public class Proxy {
         addHandler("Ax", new AxHandler()); //--> Cache OK, request character list
         addHandler("GP", new GPHandler(this)); //<-- Fight cells & team id
         addHandler("GTS", new GTSHandler()); //<-- Game Turn Start
-        System.out.println(handlers.size() + " packets handled!");
+        log.info(handlers.size() + " packets handled!");
     }
 
     private void registerCommands() {
-        System.out.println("Registering commands...");
+        log.info("Registering commands...");
         commands = Collections.synchronizedMap(new HashMap<>());
         commands.put("help", new HelpCommand(this));
         commands.put("about", new AboutCommand(this));
         commands.put("all", new AllCommand(this));
-        if (sniffing) commands.put("mapinfo", new MapinfoCommand(this));
+        if (configuration.isProxySniffing()) commands.put("mapinfo", new MapinfoCommand(this));
         commands.put("profile", new ProfileCommand(this));
         commands.put("autoskip", new AutoskipCommand());
-        System.out.println(commands.size() + " commands registered!");
+        log.info(commands.size() + " commands registered!");
     }
 
     private void startServer() {
-        System.out.println("Starting proxy server...");
+        log.info("Starting proxy server...");
         Server server = new Server(configuration.getProxyBuffer());
         server.bind(configuration.getProxyIp(), configuration.getProxyPort());
         server.onConnect(client -> {
@@ -111,7 +109,7 @@ public class Proxy {
                 if (client.getChannel().isOpen()) client.close();
                 return;
             }
-            System.out.println("[" + clientIp + "] connected!");
+            log.info("[" + clientIp + "] connected!");
             this.clients.add(new ProxyClient(this, client, clientIp));
         });
     }

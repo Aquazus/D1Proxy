@@ -10,7 +10,7 @@ public class HelpCommand implements Command {
 
     @Getter
     private String description = "Affiche la liste des commandes";
-    private Proxy proxy;
+    private final Proxy proxy;
 
     public HelpCommand(Proxy proxy) {
         this.proxy = proxy;

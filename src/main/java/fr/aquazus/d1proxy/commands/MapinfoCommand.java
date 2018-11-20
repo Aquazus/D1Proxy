@@ -10,8 +10,8 @@ import java.util.Date;
 public class MapinfoCommand implements Command {
 
     @Getter
-    private String description = "Affiche les informations sur la map actuelle";
-    private Proxy proxy;
+    private final String description = "Affiche les informations sur la map actuelle";
+    private final Proxy proxy;
 
     public MapinfoCommand(Proxy proxy) {
         this.proxy = proxy;

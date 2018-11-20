@@ -11,8 +11,8 @@ import java.util.Date;
 public class ProfileCommand implements Command {
 
     @Getter
-    private String description = "Affiche votre profil";
-    private Proxy proxy;
+    private final String description = "Affiche votre profil";
+    private final Proxy proxy;
 
     public ProfileCommand(Proxy proxy) {
         this.proxy = proxy;
@@ -24,7 +24,7 @@ public class ProfileCommand implements Command {
         StringBuilder messageBuilder = new StringBuilder("<b><u>Votre profil</u></b>");
         messageBuilder.append("\n<b>Première connexion le</b> : ");
         messageBuilder.append(proxy.getConfiguration().getFullDateFormat().format(new Date((long) profile.get("joined"))));
-        if (proxy.isSniffing()) {
+        if (proxy.getConfiguration().isProxySniffing()) {
             long mapsCount = proxy.getDatabase().getMapsCollection().countMaps(Filters.eq("discoverer", proxyClient.getUsername()));
             messageBuilder.append("\n<b>Maps découvertes</b> : ");
             messageBuilder.append(mapsCount);

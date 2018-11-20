@@ -2,14 +2,16 @@ package fr.aquazus.d1proxy.handlers;
 
 import fr.aquazus.d1proxy.Proxy;
 import fr.aquazus.d1proxy.network.ProxyClient;
+import lombok.extern.slf4j.Slf4j;
 import org.asynchttpclient.*;
 
 import java.io.File;
 import java.io.FileOutputStream;
 
+@Slf4j
 public class GDMHandler implements PacketHandler {
 
-    private Proxy proxy;
+    private final Proxy proxy;
 
     public GDMHandler(Proxy proxy) {
         this.proxy = proxy;
@@ -17,7 +19,7 @@ public class GDMHandler implements PacketHandler {
 
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
-        if (!proxy.isSniffing()) return true;
+        if (!proxy.getConfiguration().isProxySniffing()) return true;
         String[] extraData = packet.split("\\|");
         int mapId = Integer.parseInt(extraData[1]);
         String mapDate = extraData[2];
@@ -29,7 +31,7 @@ public class GDMHandler implements PacketHandler {
             try {
                 downloadMapFile(mapId + "_" + mapDate + (mapKey.isBlank() ? ".swf" : "X.swf"));
             } catch (Exception ex) {
-                System.out.println("An error occurred while downloading a map file.");
+                log.error("An error occurred while downloading a map file.");
                 ex.printStackTrace();
             }
         }
@@ -47,7 +49,7 @@ public class GDMHandler implements PacketHandler {
             @Override
             public State onStatusReceived(HttpResponseStatus responseStatus) {
                 if (responseStatus.getStatusCode() != 200) {
-                    System.out.println("Response code " + responseStatus.getStatusCode() + " for map request " + fileName);
+                    log.error("Response code " + responseStatus.getStatusCode() + " for map request " + fileName);
                     return State.ABORT;
                 }
                 return State.CONTINUE;
@@ -64,11 +66,11 @@ public class GDMHandler implements PacketHandler {
                 try {
                     stream.close();
                 } catch (Exception ex) {
-                    System.out.println("An error occurred while downloading a map file.");
+                    log.error("An error occurred while downloading a map file.");
                     ex.printStackTrace();
                     return stream;
                 }
-                System.out.println("Downloaded map file " + fileName);
+                log.info("Downloaded map file " + fileName);
                 return stream;
             }
         });

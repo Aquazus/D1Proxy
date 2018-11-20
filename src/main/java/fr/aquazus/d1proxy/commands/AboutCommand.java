@@ -7,8 +7,8 @@ import lombok.Getter;
 public class AboutCommand implements Command {
 
     @Getter
-    private String description = "Affiche les informations sur le proxy";
-    private Proxy proxy;
+    private final String description = "Affiche les informations sur le proxy";
+    private final Proxy proxy;
 
     public AboutCommand(Proxy proxy) {
         this.proxy = proxy;

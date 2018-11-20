@@ -1,6 +1,7 @@
 package fr.aquazus.d1proxy;
 
 import lombok.Data;
+import lombok.extern.slf4j.Slf4j;
 
 import java.io.FileInputStream;
 import java.io.IOException;
@@ -8,9 +9,10 @@ import java.text.SimpleDateFormat;
 import java.util.Properties;
 import java.util.TimeZone;
 
+@Slf4j
 public @Data class ProxyConfiguration {
 
-    protected boolean proxyDebug;
+    public static boolean proxyDebug;
     protected String proxyIp;
     protected int proxyPort;
     protected int proxyBuffer;
@@ -26,11 +28,11 @@ public @Data class ProxyConfiguration {
     protected String mongoDatabase;
 
     void read() throws IOException, NumberFormatException {
-        System.out.println("Reading d1proxy.properties...");
+        log.info("Reading d1proxy.properties...");
         Properties properties = new Properties();
         try (FileInputStream fileInputStream = new FileInputStream("d1proxy.properties")) {
             properties.load(fileInputStream);
-            this.proxyDebug = Boolean.parseBoolean(properties.getProperty("proxy.debug"));
+            proxyDebug = Boolean.parseBoolean(properties.getProperty("proxy.debug"));
             this.proxyIp = properties.getProperty("proxy.ip");
             this.proxyPort = Integer.parseInt(properties.getProperty("proxy.port"));
             this.proxyBuffer = Integer.parseInt(properties.getProperty("proxy.buffer"));

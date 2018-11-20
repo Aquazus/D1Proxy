@@ -5,7 +5,7 @@ import fr.aquazus.d1proxy.network.ProxyClient;
 
 public class ASKHandler implements PacketHandler {
 
-    private Proxy proxy;
+    private final Proxy proxy;
 
     public ASKHandler(Proxy proxy) {
         this.proxy = proxy;

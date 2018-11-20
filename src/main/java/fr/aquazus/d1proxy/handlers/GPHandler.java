@@ -6,7 +6,7 @@ import org.bson.Document;
 
 public class GPHandler implements PacketHandler {
 
-    private Proxy proxy;
+    private final Proxy proxy;
 
     public GPHandler(Proxy proxy) {
         this.proxy = proxy;
@@ -14,7 +14,7 @@ public class GPHandler implements PacketHandler {
 
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
-        if (!proxy.isSniffing()) return true;
+        if (!proxy.getConfiguration().isProxySniffing()) return true;
         String extraData[] = packet.substring(2).split("\\|");
         if (proxy.getDatabase().getMapsCollection().mapHasFightCells(proxyClient.getCurrentMap())) {
             return true;

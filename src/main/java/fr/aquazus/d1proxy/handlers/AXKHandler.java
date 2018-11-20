@@ -6,7 +6,7 @@ import simplenet.packet.Packet;
 
 public class AXKHandler implements PacketHandler {
 
-    private Proxy proxy;
+    private final Proxy proxy;
 
     public AXKHandler(Proxy proxy) {
         this.proxy = proxy;

@@ -3,12 +3,14 @@ package fr.aquazus.d1proxy.commands;
 import fr.aquazus.d1proxy.Proxy;
 import fr.aquazus.d1proxy.network.ProxyClient;
 import lombok.Getter;
+import lombok.extern.slf4j.Slf4j;
 
+@Slf4j
 public class AllCommand implements Command {
 
     @Getter
-    private String description = "Envoie un message aux joueurs connectés au proxy";
-    private Proxy proxy;
+    private final String description = "Envoie un message aux joueurs connectés au proxy";
+    private final Proxy proxy;
 
     public AllCommand(Proxy proxy) {
         this.proxy = proxy;
@@ -21,6 +23,6 @@ public class AllCommand implements Command {
             return;
         }
         proxy.sendMessage("<b>" + proxyClient.getUsername() + "</b> : " + args);
-        System.out.println("[" + proxyClient.getIp() + "] [.all] " + proxyClient.getUsername() + " : " + args);
+        proxyClient.log("[.all] " + args);
     }
 }

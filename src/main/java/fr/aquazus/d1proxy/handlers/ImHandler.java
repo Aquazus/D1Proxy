@@ -7,7 +7,7 @@ import simplenet.packet.Packet;
 
 public class ImHandler implements PacketHandler {
 
-    private Proxy proxy;
+    private final Proxy proxy;
 
     public ImHandler(Proxy proxy) {
         this.proxy = proxy;

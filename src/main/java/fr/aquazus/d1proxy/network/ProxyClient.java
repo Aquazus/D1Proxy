@@ -5,23 +5,25 @@ import fr.aquazus.d1proxy.handlers.PacketHandler;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Synchronized;
+import lombok.extern.slf4j.Slf4j;
 import simplenet.Client;
 import simplenet.packet.Packet;
 
 import java.io.ByteArrayOutputStream;
 import java.nio.charset.StandardCharsets;
 
+@Slf4j
 public class ProxyClient {
 
-    private Proxy proxy;
+    private final Proxy proxy;
     @Getter @Setter
     private ProxyClientState state;
     @Getter
-    private Client client;
+    private final Client client;
     @Getter
     private Client server;
     @Getter
-    private String ip;
+    private final String ip;
     @Getter @Setter
     private int characterId;
     @Getter @Setter
@@ -48,7 +50,7 @@ public class ProxyClient {
                 if (data == (byte) 0) {
                     String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
                     clientStream.reset();
-                    if (proxy.isDebug()) this.log("--> " + packet);
+                    this.log("--> " + packet.substring(0, packet.length() - 1));
                     if (server.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(server);
                     return;
                 }
@@ -59,7 +61,7 @@ public class ProxyClient {
                 if (data == (byte) 0) {
                     String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
                     gameStream.reset();
-                    if (proxy.isDebug()) this.log("<-- " + packet);
+                    this.log("<-- " + packet);
                     if (client.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(client);
                     return;
                 }
@@ -140,6 +142,11 @@ public class ProxyClient {
     }
 
     public void log(String message) {
-        System.out.print("[" + ip + (username == null ? "" : " - " + username) + "] " + message + (message.startsWith("-->") ? "" : "\n"));
+        String format = "[" + ip + (username == null ? "" : " - " + username) + "] " + message;
+        if (message.startsWith("-->") || message.startsWith("<--")) {
+            log.debug(format);
+        } else {
+            log.info(format);
+        }
     }
 }
