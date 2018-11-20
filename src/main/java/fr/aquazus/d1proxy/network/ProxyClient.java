@@ -1,6 +1,7 @@
 package fr.aquazus.d1proxy.network;
 
 import fr.aquazus.d1proxy.Proxy;
+import fr.aquazus.d1proxy.handlers.PacketHandler;
 import lombok.Getter;
 import lombok.Setter;
 import lombok.Synchronized;
@@ -101,18 +102,28 @@ public class ProxyClient {
             return true;
         }
 
+        boolean forward = true;
+
         String id = packet.substring(0, 2);
         if (proxy.getHandlers().containsKey(id)) {
-            return proxy.getHandlers().get(id).shouldForward(this, packet);
+            for (PacketHandler handlers : proxy.getHandlers().get(id)) {
+                if (!handlers.shouldForward(this, packet)) {
+                    forward = false;
+                }
+            }
         }
 
         if (packet.length() > 2) {
             String longerId = packet.substring(0, 3);
             if (proxy.getHandlers().containsKey(longerId)) {
-                return proxy.getHandlers().get(longerId).shouldForward(this, packet);
+                for (PacketHandler handlers : proxy.getHandlers().get(longerId)) {
+                    if (!handlers.shouldForward(this, packet)) {
+                        forward = false;
+                    }
+                }
             }
         }
-        return true;
+        return forward;
     }
 
     public boolean executeCommand(String command) {

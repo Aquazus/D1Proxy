@@ -37,7 +37,7 @@ public class Proxy {
     @Getter
     private boolean debug, sniffing;
     @Getter
-    private Map<String, PacketHandler> handlers;
+    private Map<String, List<PacketHandler>> handlers;
     @Getter
     private Map<String, Command> commands;
     @Getter
@@ -75,14 +75,14 @@ public class Proxy {
     private void registerHandlers() {
         System.out.println("Registering handlers...");
         handlers = Collections.synchronizedMap(new HashMap<>());
-        handlers.put("AXK", new AXKHandler(this)); //<-- Selected server address + client ticket
-        handlers.put("Im", new ImHandler(this)); //<-- Ingame message from lang files
-        handlers.put("BM", new BMHandler()); //--> Chat message
-        handlers.put("ASK", new ASKHandler(this)); //<-- Character name
-        handlers.put("GDM", new GDMHandler(this)); //<-- Map data
-        handlers.put("Ax", new AxHandler()); //--> Cache OK, request character list
-        handlers.put("GP", new GPHandler(this)); //<-- Fight cells & team id
-        handlers.put("GTS", new GTSHandler()); //<-- Game Turn Start
+        handlers.put("AXK", Collections.singletonList(new AXKHandler(this))); //<-- Selected server address + client ticket
+        handlers.put("Im", Collections.singletonList(new ImHandler(this))); //<-- Ingame message from lang files
+        handlers.put("BM", Collections.singletonList(new BMHandler())); //--> Chat message
+        handlers.put("ASK", Collections.singletonList(new ASKHandler(this))); //<-- Character name
+        handlers.put("GDM", Collections.singletonList(new GDMHandler(this))); //<-- Map data
+        handlers.put("Ax", Collections.singletonList(new AxHandler())); //--> Cache OK, request character list
+        handlers.put("GP", Collections.singletonList(new GPHandler(this))); //<-- Fight cells & team id
+        handlers.put("GTS", Collections.singletonList(new GTSHandler())); //<-- Game Turn Start
         System.out.println(handlers.size() + " handlers registered!");
     }
 
