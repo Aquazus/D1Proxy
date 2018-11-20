@@ -4,6 +4,7 @@ d1proxy.log
 .idea/vcs.xml
 target/
 plugins/
+maps/
 
 ### Intellij ###
 # Covers JetBrains IDEs: IntelliJ, RubyMine, PhpStorm, AppCode, PyCharm, CLion, Android Studio and Webstorm
