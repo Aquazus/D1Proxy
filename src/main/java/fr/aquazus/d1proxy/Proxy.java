@@ -60,10 +60,16 @@ public class Proxy {
             ex.printStackTrace();
             System.exit(0);
         }
+        if (!configuration.isMongoEnabled() && configuration.isProxySniffing()) {
+            log.warn("Sniffing mode is enabled but mongo is disabled. Sniffing mode requires Mongo. Disabling sniffing mode.");
+            configuration.setProxySniffing(false);
+        }
         proxyCipher = new ProxyCipher();
         registerHandlers();
         registerCommands();
-        database = new ProxyDatabase(configuration.getMongoIp(), configuration.getMongoPort(), configuration.getMongoDatabase());
+        if (configuration.isMongoEnabled()) {
+            database = new ProxyDatabase(configuration.getMongoIp(), configuration.getMongoPort(), configuration.getMongoDatabase());
+        }
         pluginManager = new ProxyPluginManager(this);
         Runtime.getRuntime().addShutdownHook(new Thread(() -> pluginManager.stopPlugins()));
         pluginManager.loadPlugins();
@@ -91,7 +97,7 @@ public class Proxy {
         commands.put("about", new AboutCommand(this));
         commands.put("all", new AllCommand(this));
         if (configuration.isProxySniffing()) commands.put("mapinfo", new MapinfoCommand(this));
-        commands.put("profile", new ProfileCommand(this));
+        if (configuration.isMongoEnabled()) commands.put("profile", new ProfileCommand(this));
         commands.put("autoskip", new AutoskipCommand());
         commands.put("antiafk", new AntiafkCommand(this));
         log.info(commands.size() + " commands registered!");

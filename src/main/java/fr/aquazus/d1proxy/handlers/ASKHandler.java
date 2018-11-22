@@ -17,11 +17,12 @@ public class ASKHandler implements PacketHandler {
         proxyClient.setCharacterId(Integer.parseInt(extraData[1]));
         proxyClient.log("Setting username as: " + extraData[2]);
         proxyClient.setUsername(extraData[2]);
-        if (proxy.getDatabase().getProfilesCollection().profileExists(extraData[2])) {
-            proxy.sendMessage("<b>" + extraData[2] + "</b> vient de se connecter à D1Proxy.");
-        } else {
+        if (proxy.getConfiguration().isMongoEnabled() && !proxy.getDatabase().getProfilesCollection().profileExists(extraData[2])) {
             proxy.getDatabase().getProfilesCollection().insertNewProfile(extraData[2]);
             proxy.sendMessage("<b>" + extraData[2] + "</b> est nouveau sur D1Proxy, bienvenue !");
+            return true;
+        } else {
+            proxy.sendMessage("<b>" + extraData[2] + "</b> vient de se connecter à D1Proxy.");
         }
         return true;
     }

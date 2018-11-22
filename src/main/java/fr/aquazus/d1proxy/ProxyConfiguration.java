@@ -23,6 +23,7 @@ public @Data class ProxyConfiguration {
     protected String dofusIp;
     protected int dofusPort;
 
+    protected boolean mongoEnabled;
     protected String mongoIp;
     protected int mongoPort;
     protected String mongoDatabase;
@@ -42,6 +43,7 @@ public @Data class ProxyConfiguration {
             this.fullDateFormat.setTimeZone(this.proxyTimeZone);
             this.dofusIp = properties.getProperty("dofus.ip");
             this.dofusPort = Integer.parseInt(properties.getProperty("dofus.port"));
+            this.mongoEnabled = Boolean.parseBoolean(properties.getProperty("mongo.enabled"));
             this.mongoIp = properties.getProperty("mongo.ip");
             this.mongoPort = Integer.parseInt(properties.getProperty("mongo.port"));
             this.mongoDatabase = properties.getProperty("mongo.database");
