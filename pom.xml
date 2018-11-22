@@ -7,6 +7,11 @@
     <version>1.7.0</version>
     <name>D1Proxy</name>
 
+    <properties>
+        <main.class>fr.aquazus.d1proxy.Proxy</main.class>
+        <java.version>11</java.version>
+    </properties>
+
     <build>
         <plugins>
             <plugin>
@@ -14,7 +19,7 @@
                 <artifactId>exec-maven-plugin</artifactId>
                 <version>1.6.0</version>
                 <configuration>
-                    <mainClass>fr.aquazus.d1proxy.Proxy</mainClass>
+                    <mainClass>${main.class}</mainClass>
                 </configuration>
             </plugin>
             <plugin>
@@ -26,7 +31,7 @@
                     </excludes>
                     <archive>
                         <manifest>
-                            <mainClass>fr.aquazus.d1proxy.Proxy</mainClass>
+                            <mainClass>${main.class}</mainClass>
                         </manifest>
                     </archive>
                 </configuration>
@@ -45,7 +50,7 @@
                             <archive>
                                 <manifest>
                                     <addClasspath>true</addClasspath>
-                                    <mainClass>fr.aquazus.d1proxy.Proxy</mainClass>
+                                    <mainClass>${main.class}</mainClass>
                                 </manifest>
                             </archive>
                             <descriptorRefs>
@@ -76,8 +81,8 @@
                     </execution>
                 </executions>
                 <configuration>
-                    <source>11</source>
-                    <target>11</target>
+                    <source>${java.version}</source>
+                    <target>${java.version}</target>
                     <encoding>UTF-8</encoding>
                 </configuration>
             </plugin>
