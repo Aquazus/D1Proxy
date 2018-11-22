@@ -29,7 +29,7 @@ public class Proxy {
     }
 
     @Getter
-    private final String version = "1.7.0";
+    private final String version = "1.7.1-dev";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -93,6 +93,7 @@ public class Proxy {
         if (configuration.isProxySniffing()) commands.put("mapinfo", new MapinfoCommand(this));
         commands.put("profile", new ProfileCommand(this));
         commands.put("autoskip", new AutoskipCommand());
+        commands.put("antiafk", new AntiafkCommand(this));
         log.info(commands.size() + " commands registered!");
     }
 

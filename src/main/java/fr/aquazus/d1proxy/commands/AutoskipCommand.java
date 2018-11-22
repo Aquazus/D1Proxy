@@ -15,11 +15,11 @@ public class AutoskipCommand implements Command {
             return;
         }
         if (args.split(" ")[0].toLowerCase().equalsIgnoreCase("off")) {
-            proxyClient.sendMessage(proxyClient.isAutoSkip() ? "Le mode autoskip est désormais <b>désactivé</b>" : "Vous n'êtes pas en mode autoskip");
-            proxyClient.setAutoSkip(false);
+            proxyClient.sendMessage(proxyClient.isAutoSkipEnabled() ? "Le mode autoskip est désormais <b>désactivé</b>" : "Vous n'êtes pas en mode autoskip");
+            proxyClient.setAutoSkipEnabled(false);
         } else if (args.split(" ")[0].toLowerCase().equalsIgnoreCase("on")) {
-            proxyClient.sendMessage(proxyClient.isAutoSkip() ? "Vous êtes déjà en mode autoskip" : "Le mode autoskip est désormais <b>activé</b>");
-            proxyClient.setAutoSkip(true);
+            proxyClient.sendMessage(proxyClient.isAutoSkipEnabled() ? "Vous êtes déjà en mode autoskip" : "Le mode autoskip est désormais <b>activé</b>");
+            proxyClient.setAutoSkipEnabled(true);
         } else {
             proxyClient.sendMessage("<b>Utilisation :</b> .autoskip on/off");
         }

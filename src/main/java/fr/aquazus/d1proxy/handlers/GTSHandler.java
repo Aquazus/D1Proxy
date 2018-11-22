@@ -8,7 +8,7 @@ public class GTSHandler implements PacketHandler {
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet) {
         String[] extraData = packet.substring(3).split("\\|");
-        if (proxyClient.isAutoSkip() && proxyClient.getCharacterId() == Integer.parseInt(extraData[0])) {
+        if (proxyClient.isAutoSkipEnabled() && proxyClient.getCharacterId() == Integer.parseInt(extraData[0])) {
             Packet.builder().putBytes("Gt".getBytes()).putByte(0).writeAndFlush(proxyClient.getServer());
             Packet.builder().putBytes("GTF".getBytes()).putBytes(String.valueOf(proxyClient.getCharacterId()).getBytes()).putByte(0).writeAndFlush(proxyClient.getClient());
             Packet.builder().putBytes("GTR".getBytes()).putBytes(String.valueOf(proxyClient.getCharacterId()).getBytes()).putByte(0).writeAndFlush(proxyClient.getClient());

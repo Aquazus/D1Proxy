@@ -31,7 +31,9 @@ public class ProxyClient {
     @Getter @Setter
     private int currentMap;
     @Getter @Setter
-    private boolean autoSkip;
+    private boolean autoSkipEnabled;
+    @Getter @Setter
+    private boolean antiAfkEnabled;
 
     public ProxyClient(Proxy proxy, Client client, String ip) {
         this.proxy = proxy;
