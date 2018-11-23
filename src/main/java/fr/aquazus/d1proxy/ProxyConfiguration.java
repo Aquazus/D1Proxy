@@ -15,7 +15,6 @@ public @Data class ProxyConfiguration {
     public static boolean proxyDebug;
     protected String proxyIp;
     protected int proxyPort;
-    protected int proxyBuffer;
     protected boolean proxySniffing;
     protected TimeZone proxyTimeZone;
     protected SimpleDateFormat fullDateFormat;
@@ -36,7 +35,6 @@ public @Data class ProxyConfiguration {
             proxyDebug = Boolean.parseBoolean(properties.getProperty("proxy.debug"));
             this.proxyIp = properties.getProperty("proxy.ip");
             this.proxyPort = Integer.parseInt(properties.getProperty("proxy.port"));
-            this.proxyBuffer = Integer.parseInt(properties.getProperty("proxy.buffer"));
             this.proxySniffing = Boolean.parseBoolean(properties.getProperty("proxy.sniffing"));
             this.proxyTimeZone = TimeZone.getTimeZone(properties.getProperty("proxy.timezone"));
             this.fullDateFormat = new SimpleDateFormat("dd/MM/YY à HH:mm:ss");

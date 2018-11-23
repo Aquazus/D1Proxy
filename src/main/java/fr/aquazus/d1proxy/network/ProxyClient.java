@@ -53,7 +53,6 @@ public class ProxyClient {
                     String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
                     clientStream.reset();
                     this.log("--> " + packet.substring(0, packet.length() - 1));
-                    //if (server.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(server);
                     if (server.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, server);
                     return;
                 }
@@ -65,7 +64,6 @@ public class ProxyClient {
                     String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
                     gameStream.reset();
                     this.log("<-- " + packet);
-                    //if (client.getChannel().isOpen() && shouldForward(packet)) Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(client);
                     if (client.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, client);
                     return;
                 }
@@ -96,7 +94,6 @@ public class ProxyClient {
         if (server.getChannel().isOpen()) server.close();
         if (state != ProxyClientState.DISCONNECTED) {
             if (state == ProxyClientState.INGAME) {
-                state = ProxyClientState.DISCONNECTED;
                 proxy.sendMessage("<b>" + username + "</b> vient de se déconnecter du proxy.");
             }
             state = ProxyClientState.DISCONNECTED;
