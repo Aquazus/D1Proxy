@@ -43,7 +43,6 @@ public class Proxy {
     @Getter
     private List<ProxyClient> clients;
     @Getter
-    private Map<String, String> exchangeCache; //TODO: Maybe improve the exchange cache system...
     private long startTime;
     private ProxyPluginManager pluginManager;
 
@@ -51,7 +50,6 @@ public class Proxy {
         log.info("Initializing D1Proxy...");
         startTime = System.currentTimeMillis();
         clients = Collections.synchronizedList(new ArrayList<>());
-        exchangeCache = Collections.synchronizedMap(new HashMap<>());
         try {
             configuration = new ProxyConfiguration();
             configuration.read();
@@ -87,6 +85,7 @@ public class Proxy {
         addHandler("Ax", new AxHandler()); //--> Cache OK, request character list
         addHandler("GP", new GPHandler(this)); //<-- Fight cells & team id
         addHandler("GTS", new GTSHandler()); //<-- Game Turn Start
+        addHandler("HG", new HGHandler(this)); //<-- Hello Game
         log.info(handlers.size() + " packets handled!");
     }
 

@@ -45,7 +45,7 @@ public class AntiafkCommand implements Command, Runnable {
     @Override
     public void run() {
         log.debug("Running the Antiafk task...");
-        Packet ping = Packet.builder().putBytes("QL".getBytes()).putByte(0);
+        Packet ping = Packet.builder().putBytes("QL".getBytes()).putByte(10).putByte(0);
         for (ProxyClient clients : proxy.getClients()) {
             if (clients.isAntiAfkEnabled()) {
                 ping.writeAndFlush(clients.getServer());

@@ -25,6 +25,8 @@ public class ProxyClient {
     @Getter
     private final String ip;
     @Getter @Setter
+    private String authTicket;
+    @Getter @Setter
     private int characterId;
     @Getter @Setter
     private String username;
@@ -40,52 +42,71 @@ public class ProxyClient {
         this.state = ProxyClientState.INITIALIZING;
         this.client = client;
         this.ip = ip;
-        this.connectTunnel();
+        this.connectAuth();
     }
 
-    private void connectTunnel() {
-        this.server = new Client(1024);
-        server.onConnect(() -> {
-            this.log("tunnel opened!");
-            ByteArrayOutputStream clientStream = new ByteArrayOutputStream();
-            client.readByteAlways(data -> {
-                if (data == (byte) 0) {
-                    String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
-                    clientStream.reset();
-                    this.log("--> " + packet.substring(0, packet.length() - 1));
-                    if (server.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, server);
-                    return;
-                }
-                clientStream.write(data);
-            });
-            ByteArrayOutputStream gameStream = new ByteArrayOutputStream();
-            server.readByteAlways(data -> {
-                if (data == (byte) 0) {
-                    String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
-                    gameStream.reset();
-                    this.log("<-- " + packet);
-                    if (client.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, client);
-                    return;
-                }
-                gameStream.write(data);
-            });
+    private void connectAuth() {
+        Client authServer = new Client(1024);
+        authServer.onConnect(() -> {
+            this.log("auth tunnel opened!");
+            server = authServer;
+            handleClient(client);
+            handleServer(authServer);
+        });
+        authServer.postDisconnect(() -> this.log("auth tunnel closed!"));
+        authServer.connect(proxy.getConfiguration().getDofusIp(), proxy.getConfiguration().getDofusPort());
+    }
+
+    private void connectGame(String ip, int port) {
+        Client gameServer = new Client(1024);
+        gameServer.onConnect(() -> {
+            this.log("game tunnel opened!");
+            server = gameServer;
+            handleServer(gameServer);
+        });
+        gameServer.postDisconnect(() -> {
+            this.log("game tunnel closed!");
+            this.disconnect();
+        });
+        gameServer.connect(ip, port);
+    }
+
+    private void handleClient(Client client) {
+        ByteArrayOutputStream clientStream = new ByteArrayOutputStream();
+        client.readByteAlways(data -> {
+            if (data == (byte) 0) {
+                String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
+                clientStream.reset();
+                this.log("--> " + packet.substring(0, packet.length() - 1));
+                if (server.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, server);
+                return;
+            }
+            clientStream.write(data);
         });
         client.postDisconnect(() -> {
             this.log("disconnected!");
             this.disconnect();
         });
-        server.postDisconnect(() -> {
-            this.log("tunnel closed!");
-            this.disconnect();
+    }
+
+    private void handleServer(Client server) {
+        ByteArrayOutputStream gameStream = new ByteArrayOutputStream();
+        server.readByteAlways(data -> {
+            if (data == (byte) 0) {
+                String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
+                gameStream.reset();
+                this.log("<-- " + packet);
+                if (client.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, client);
+                return;
+            }
+            gameStream.write(data);
         });
-        if (proxy.getExchangeCache().containsKey(ip)) {
-            this.log("Found game address in exchange cache, tunneling to the right server...");
-            String address[] = proxy.getExchangeCache().get(ip).split(":");
-            proxy.getExchangeCache().remove(ip);
-            server.connect(address[0], Integer.parseInt(address[1]));
-        } else {
-            server.connect(proxy.getConfiguration().getDofusIp(), proxy.getConfiguration().getDofusPort());
-        }
+    }
+
+    public void switchToGame(String ip, int port) {
+        log.info("Switching to game server " + ip + ":" + port);
+        state = ProxyClientState.SERVER_CONNECTING;
+        connectGame(ip, port);
     }
 
     @Synchronized
