@@ -37,6 +37,8 @@ public class Proxy {
     @Getter
     private ProxyDatabase database;
     @Getter
+    private ProxyPluginManager pluginManager;
+    @Getter
     private Map<String, List<PacketHandler>> handlers;
     @Getter
     private Map<String, Command> commands;
@@ -44,7 +46,6 @@ public class Proxy {
     private List<ProxyClient> clients;
     @Getter
     private long startTime;
-    private ProxyPluginManager pluginManager;
 
     private void init() {
         log.info("Initializing D1Proxy...");
@@ -99,6 +100,7 @@ public class Proxy {
         if (configuration.isMongoEnabled()) commands.put("profile", new ProfileCommand(this));
         commands.put("autoskip", new AutoskipCommand());
         commands.put("antiafk", new AntiafkCommand(this));
+        commands.put("plugins", new PluginsCommand(this));
         log.info(commands.size() + " commands registered!");
     }
 

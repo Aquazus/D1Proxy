@@ -1,6 +1,7 @@
 package fr.aquazus.d1proxy.plugins;
 
 import fr.aquazus.d1proxy.Proxy;
+import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
 import org.pf4j.DefaultPluginManager;
 import org.pf4j.PluginManager;
@@ -14,6 +15,7 @@ public class ProxyPluginManager {
 
     private final Proxy proxy;
     private final PluginManager manager;
+    @Getter
     private final List<ProxyPlugin> plugins;
 
     public ProxyPluginManager(Proxy proxy) {
@@ -28,7 +30,11 @@ public class ProxyPluginManager {
         manager.loadPlugins();
         manager.startPlugins();
         plugins.addAll(manager.getExtensions(ProxyPlugin.class));
-        log.info("Found " + plugins.size() + " plugins, enabling them if needed...");
+        if (plugins.isEmpty()) {
+            log.info("No plugins found");
+            return;
+        }
+        log.info("Found " + plugins.size() + " plugins, enabling them...");
         plugins.forEach(plugin -> plugin.main(proxy));
     }
 

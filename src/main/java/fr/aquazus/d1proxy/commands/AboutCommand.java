@@ -19,6 +19,7 @@ public class AboutCommand implements Command {
         proxyClient.sendMessage("<b><u>D1Proxy " + proxy.getVersion() + " par Aquazus</u></b>\n" +
                 "<b>Joueurs connectés</b> : " + proxy.getOnlineCount() + "\n" +
                 "<b>Uptime</b> : " + proxy.getUptime() + "\n" +
+                "<b>Plugins chargés</b> : " + proxy.getPluginManager().getPlugins().size() + "\n" +
                 "<b>Credits :</b> Jacob");
     }
 }
