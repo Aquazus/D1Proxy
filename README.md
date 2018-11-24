@@ -47,7 +47,7 @@
 ## Features
 
 - **Useful commands**
-- (currently) **Undetected** by Ankama (but use at your own risk)
+- *(currently)* **Undetected** by Ankama (but use at your own risk)
 - **Community-based** data sniffing
 - **Quality of Life** features to improve players experience
 - A **Plugin system** *(Beta)*
