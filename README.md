@@ -24,7 +24,7 @@
 
 ## Installation
 
-- [Install a MongoDB server](https://docs.mongodb.com/manual/installation/) on your system
+- *(optional)* [Install a MongoDB server](https://docs.mongodb.com/manual/installation/) on your system
 - Make sure you have an IDE that includes the Java 11 Developer Kit and Maven
 
 ### Clone
@@ -34,23 +34,23 @@
 ### Compile
 
 - Import the project using the pom.xml into your favorite IDE and run a Maven `package` goal
-- You will find the jar file inside the target folder, named `d1proxy-<version>-jar-with-dependencies.jar`
+- You will find the jar file inside the `target` folder, named `d1proxy-<version>-jar-with-dependencies.jar`
 
 ### Setup
 
 - Make sure the `d1proxy.properties` configuration file is in the same folder as your jar file
 - Configure the proxy as needed
-- Run the Proxy with Java 11 (or use one of the provided start script)
+- Run the Proxy with Java 11
 
 ---
 
 ## Features
 
-- **6 commands**
+- **Useful commands**
 - (currently) **Undetected** by Ankama (but use at your own risk)
 - **Community-based** data sniffing
 - **Quality of Life** features to improve players experience
-- A **Plugin system** *(WIP)*
+- A **Plugin system** *(Beta)*
 
 ---
 
@@ -89,7 +89,8 @@
 - **How to disable the community sniffing features?**
     - Set `proxy.sniffing` to `false`
 - **How to run the proxy without MongoDB?**
-    - Sadly, you can't.
+    - Set `mongo.enabled` to `false`
+    - Please understand that disabling MongoDB will also disable the community sniffing features. 
 - **How can people connect to my proxy?**
     - 1) Make sure `proxy.ip` is set on your WAN IP address
     - 2) Make sure the `proxy.port` provided is not blocked by your router and/or firewall
