@@ -176,7 +176,7 @@ public class ProxyClient {
     private void splitAndFlush(String packet, Client destination) {
         try {
             StringReader reader = new StringReader(packet);
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream(2048);
+            ByteArrayOutputStream buffer = new ByteArrayOutputStream(1024);
             OutputStreamWriter writer = new OutputStreamWriter(buffer, StandardCharsets.UTF_8);
             char[] cbuf = new char[1024];
             byte[] tempBuf;
