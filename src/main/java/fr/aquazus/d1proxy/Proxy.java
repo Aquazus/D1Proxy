@@ -55,8 +55,7 @@ public class Proxy {
             configuration = new ProxyConfiguration();
             configuration.read();
         } catch (Exception ex) {
-            log.error("An error occurred while reading the configuration file. Aborting startup.");
-            ex.printStackTrace();
+            log.error("An error occurred while reading the configuration file. Aborting startup.", ex);
             System.exit(0);
         }
         if (!configuration.isMongoEnabled() && configuration.isProxySniffing()) {
@@ -113,7 +112,7 @@ public class Proxy {
             try {
                 clientIp = client.getChannel().getRemoteAddress().toString().substring(1).split(":")[0];
             } catch (Exception ex) {
-                ex.printStackTrace();
+                log.error("An error occurred while parsing an user IP", ex);
                 if (client.getChannel().isOpen()) client.close();
                 return;
             }

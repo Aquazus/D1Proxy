@@ -201,7 +201,7 @@ public class ProxyClient {
             }
 
         } catch (Exception ex) {
-            ex.printStackTrace();
+            log.error("An error occurred while splitting a packet", ex);
         }
     }
 }

@@ -31,8 +31,7 @@ public class GDMHandler implements PacketHandler {
             try {
                 downloadMapFile(mapId + "_" + mapDate + (mapKey.isBlank() ? ".swf" : "X.swf"));
             } catch (Exception ex) {
-                log.error("An error occurred while downloading a map file.");
-                ex.printStackTrace();
+                log.error("An error occurred while downloading a map file.", ex);
             }
         }
         return true;
@@ -66,8 +65,7 @@ public class GDMHandler implements PacketHandler {
                 try {
                     stream.close();
                 } catch (Exception ex) {
-                    log.error("An error occurred while downloading a map file.");
-                    ex.printStackTrace();
+                    log.error("An error occurred while downloading a map file.", ex);
                     return stream;
                 }
                 log.info("Downloaded map file " + fileName);
