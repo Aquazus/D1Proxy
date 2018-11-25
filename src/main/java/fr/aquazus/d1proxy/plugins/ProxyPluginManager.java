@@ -3,8 +3,7 @@ package fr.aquazus.d1proxy.plugins;
 import fr.aquazus.d1proxy.Proxy;
 import lombok.Getter;
 import lombok.extern.slf4j.Slf4j;
-import org.pf4j.DefaultPluginManager;
-import org.pf4j.PluginManager;
+import org.pf4j.*;
 
 import java.util.ArrayList;
 import java.util.Collections;
@@ -21,7 +20,16 @@ public class ProxyPluginManager {
     public ProxyPluginManager(Proxy proxy) {
         log.info("Loading plugin system...");
         this.proxy = proxy;
-        this.manager = new DefaultPluginManager();
+        this.manager = new DefaultPluginManager() {
+            @Override
+            protected PluginLoader createPluginLoader() {
+                return new JarPluginLoader(this);
+            }
+            @Override
+            protected PluginDescriptorFinder createPluginDescriptorFinder() {
+                return new ManifestPluginDescriptorFinder();
+            }
+        };
         this.plugins = Collections.synchronizedList(new ArrayList<>());
     }
 
