@@ -4,7 +4,7 @@
     <groupId>fr.aquazus</groupId>
     <artifactId>d1proxy</artifactId>
     <packaging>jar</packaging>
-    <version>1.9.1-dev</version>
+    <version>1.9.1</version>
     <name>D1Proxy</name>
 
     <properties>

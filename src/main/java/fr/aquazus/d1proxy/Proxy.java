@@ -29,7 +29,7 @@ public class Proxy {
     }
 
     @Getter
-    private final String version = "1.9.1-dev";
+    private final String version = "1.9.1";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -92,14 +92,14 @@ public class Proxy {
     private void registerCommands() {
         log.info("Registering commands...");
         commands = Collections.synchronizedMap(new HashMap<>());
-        commands.put("help", new HelpCommand(this));
-        commands.put("about", new AboutCommand(this));
-        commands.put("all", new AllCommand(this));
-        if (configuration.isProxySniffing()) commands.put("mapinfo", new MapinfoCommand(this));
-        if (configuration.isMongoEnabled()) commands.put("profile", new ProfileCommand(this));
-        commands.put("autoskip", new AutoskipCommand());
-        commands.put("antiafk", new AntiafkCommand(this));
-        commands.put("plugins", new PluginsCommand(this));
+        addCommand("help", new HelpCommand(this));
+        addCommand("about", new AboutCommand(this));
+        addCommand("all", new AllCommand(this));
+        if (configuration.isProxySniffing()) addCommand("mapinfo", new MapinfoCommand(this));
+        if (configuration.isMongoEnabled()) addCommand("profile", new ProfileCommand(this));
+        addCommand("autoskip", new AutoskipCommand());
+        addCommand("antiafk", new AntiafkCommand(this));
+        addCommand("plugins", new PluginsCommand(this));
         log.info(commands.size() + " commands registered!");
     }
 
@@ -148,6 +148,13 @@ public class Proxy {
             handlers.get(packetId).add(handler);
         } else {
             handlers.put(packetId, Collections.synchronizedList(new ArrayList<>(List.of(handler))));
+        }
+    }
+
+    @SuppressWarnings("WeakerAccess")
+    public void addCommand(String commandName, Command command) {
+        if (!commands.containsKey(commandName)) {
+            commands.put(commandName, command);
         }
     }
 }
