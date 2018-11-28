@@ -29,7 +29,7 @@ public class Proxy {
     }
 
     @Getter
-    private final String version = "1.9.1";
+    private final String version = "1.10.0-dev";
     @Getter
     private ProxyConfiguration configuration;
     @Getter
@@ -100,6 +100,8 @@ public class Proxy {
         addCommand("autoskip", new AutoskipCommand());
         addCommand("antiafk", new AntiafkCommand(this));
         addCommand("plugins", new PluginsCommand(this));
+        addCommand("autoready", new AutoreadyCommand());
+        addCommand("autojoin", new AutojoinCommand());
         log.info(commands.size() + " commands registered!");
     }
 
