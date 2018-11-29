@@ -88,6 +88,7 @@ public class Proxy {
         addHandler("HG", new HGHandler(this)); //<-- Hello Game
         addHandler("PL", new PLHandler(this)); //<-- Group Leader
         addHandler("PV", new PVHandler(this)); //<-> Leave Group
+        addHandler("GR1", new GR1Handler(this)); //<-> Character Ready
         log.info(handlers.size() + " packets handled!");
     }
 
@@ -127,6 +128,18 @@ public class Proxy {
 
     public long getOnlineCount() {
         return clients.stream().map(ProxyClient::getState).filter(s -> s == ProxyClientState.INGAME).count();
+    }
+
+    @Synchronized("clients")
+    public ProxyClient getClientByCharacterId(int characterId) {
+        ProxyClient result = null;
+        for (ProxyClient client : clients) {
+            if (client.getCharacterId() == characterId) {
+                result = client;
+                break;
+            }
+        }
+        return result;
     }
 
     public String getUptime() {
