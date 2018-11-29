@@ -44,7 +44,9 @@ public class GDMHandler implements PacketHandler {
             throw new Exception("Creation of the maps folder failed");
         }
         FileOutputStream stream = new FileOutputStream("maps/" + fileName);
-        client.prepareGet(proxy.getConfiguration().getDofusMapsCdn() + fileName).execute(new AsyncCompletionHandler<FileOutputStream>() {
+        String url = proxy.getConfiguration().getDofusMapsCdn();
+        if (!url.endsWith("/")) url = url + "/";
+        client.prepareGet(url + fileName).execute(new AsyncCompletionHandler<FileOutputStream>() {
             @Override
             public State onStatusReceived(HttpResponseStatus responseStatus) {
                 if (responseStatus.getStatusCode() != 200) {
