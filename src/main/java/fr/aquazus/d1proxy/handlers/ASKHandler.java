@@ -12,7 +12,7 @@ public class ASKHandler implements PacketHandler {
     }
 
     @Override
-    public boolean shouldForward(ProxyClient proxyClient, String packet) {
+    public boolean shouldForward(ProxyClient proxyClient, String packet, PacketDestination destination) {
         String[] extraData = packet.split("\\|");
         proxyClient.setCharacterId(Integer.parseInt(extraData[1]));
         proxyClient.log("Setting username as: " + extraData[2]);

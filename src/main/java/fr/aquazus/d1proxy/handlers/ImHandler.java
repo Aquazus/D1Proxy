@@ -14,7 +14,7 @@ public class ImHandler implements PacketHandler {
     }
 
     @Override
-    public boolean shouldForward(ProxyClient proxyClient, String packet) {
+    public boolean shouldForward(ProxyClient proxyClient, String packet, PacketDestination destination) {
         if (packet.startsWith("Im0153;")) {
             proxyClient.setState(ProxyClientState.INGAME);
             Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(proxyClient.getClient());

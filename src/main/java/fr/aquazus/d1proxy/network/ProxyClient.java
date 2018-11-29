@@ -1,6 +1,7 @@
 package fr.aquazus.d1proxy.network;
 
 import fr.aquazus.d1proxy.Proxy;
+import fr.aquazus.d1proxy.handlers.PacketDestination;
 import fr.aquazus.d1proxy.handlers.PacketHandler;
 import lombok.Getter;
 import lombok.Setter;
@@ -80,7 +81,7 @@ public class ProxyClient {
                 String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
                 clientStream.reset();
                 this.log("--> " + packet.substring(0, packet.length() - 1));
-                if (server.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, server);
+                if (server.getChannel().isOpen() && shouldForward(packet, PacketDestination.SERVER)) splitAndFlush(packet, server);
                 return;
             }
             clientStream.write(data);
@@ -98,7 +99,7 @@ public class ProxyClient {
                 String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
                 gameStream.reset();
                 this.log("<-- " + packet);
-                if (client.getChannel().isOpen() && shouldForward(packet)) splitAndFlush(packet, client);
+                if (client.getChannel().isOpen() && shouldForward(packet, PacketDestination.CLIENT)) splitAndFlush(packet, client);
                 return;
             }
             gameStream.write(data);
@@ -124,7 +125,7 @@ public class ProxyClient {
         }
     }
 
-    private boolean shouldForward(String packet) {
+    private boolean shouldForward(String packet, PacketDestination destination) {
         if (packet.length() < 2) {
             return true;
         }
@@ -134,7 +135,7 @@ public class ProxyClient {
         String id = packet.substring(0, 2);
         if (proxy.getHandlers().containsKey(id)) {
             for (PacketHandler handlers : proxy.getHandlers().get(id)) {
-                if (!handlers.shouldForward(this, packet)) {
+                if (!handlers.shouldForward(this, packet, destination)) {
                     forward = false;
                 }
             }
@@ -144,7 +145,7 @@ public class ProxyClient {
             String longerId = packet.substring(0, 3);
             if (proxy.getHandlers().containsKey(longerId)) {
                 for (PacketHandler handlers : proxy.getHandlers().get(longerId)) {
-                    if (!handlers.shouldForward(this, packet)) {
+                    if (!handlers.shouldForward(this, packet, destination)) {
                         forward = false;
                     }
                 }

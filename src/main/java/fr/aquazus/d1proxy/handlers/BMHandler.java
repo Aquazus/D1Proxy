@@ -6,7 +6,7 @@ import simplenet.packet.Packet;
 public class BMHandler implements PacketHandler {
 
     @Override
-    public boolean shouldForward(ProxyClient proxyClient, String packet) {
+    public boolean shouldForward(ProxyClient proxyClient, String packet, PacketDestination destination) {
         String message = packet.split("\\|")[1];
         if (message.startsWith(".")) {
             proxyClient.log("Executing command " + message);
