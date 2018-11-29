@@ -15,11 +15,11 @@ public class AutoreadyCommand implements Command {
             return;
         }
         if (args.split(" ")[0].toLowerCase().equalsIgnoreCase("off")) {
-            proxyClient.sendMessage(proxyClient.isAutoSkipEnabled() ? "Le mode autoready est désormais <b>désactivé</b>" : "Vous n'êtes pas en mode autoready");
-            //TODO: Logic
+            proxyClient.sendMessage(proxyClient.isAutoReadyEnabled() ? "Le mode autoready est désormais <b>désactivé</b>" : "Vous n'êtes pas en mode autoready");
+            proxyClient.setAutoReadyEnabled(false);
         } else if (args.split(" ")[0].toLowerCase().equalsIgnoreCase("on")) {
-            proxyClient.sendMessage(proxyClient.isAutoSkipEnabled() ? "Vous êtes déjà en mode autoready" : "Le mode autoready est désormais <b>activé</b>");
-            //TODO: Logic
+            proxyClient.sendMessage(proxyClient.isAutoReadyEnabled() ? "Vous êtes déjà en mode autoready" : "Le mode autoready est désormais <b>activé</b>");
+            proxyClient.setAutoReadyEnabled(true);
         } else {
             proxyClient.sendMessage("<b>Utilisation :</b> .autoready on/off");
         }

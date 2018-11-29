@@ -39,6 +39,10 @@ public class ProxyClient {
     private boolean autoSkipEnabled;
     @Getter @Setter
     private boolean antiAfkEnabled;
+    @Getter @Setter
+    private boolean autoReadyEnabled;
+    @Getter @Setter
+    private boolean autoJoinEnabled;
 
     public ProxyClient(Proxy proxy, Client client, String ip) {
         this.proxy = proxy;
