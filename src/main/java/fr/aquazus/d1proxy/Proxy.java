@@ -86,6 +86,8 @@ public class Proxy {
         addHandler("GP", new GPHandler(this)); //<-- Fight cells & team id
         addHandler("GTS", new GTSHandler()); //<-- Game Turn Start
         addHandler("HG", new HGHandler(this)); //<-- Hello Game
+        addHandler("PL", new PLHandler(this)); //<-- Group Leader
+        addHandler("PV", new PVHandler(this)); //<-> Leave Group
         log.info(handlers.size() + " packets handled!");
     }
 

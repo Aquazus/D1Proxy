@@ -29,6 +29,8 @@ public class ProxyClient {
     @Getter @Setter
     private int characterId;
     @Getter @Setter
+    private int groupLeader;
+    @Getter @Setter
     private String username;
     @Getter @Setter
     private int currentMap;
