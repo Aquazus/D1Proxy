@@ -89,6 +89,7 @@ public class Proxy {
         addHandler("PL", new PLHandler(this)); //<-- Group Leader
         addHandler("PV", new PVHandler(this)); //<-> Leave Group
         addHandler("GR1", new GR1Handler(this)); //<-> Character Ready
+        addHandler("Gt", new GtHandler(this)); //<-- Fight created on map
         log.info(handlers.size() + " packets handled!");
     }
 
