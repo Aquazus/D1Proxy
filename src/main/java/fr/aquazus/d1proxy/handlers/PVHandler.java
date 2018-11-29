@@ -13,7 +13,7 @@ public class PVHandler implements PacketHandler {
 
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet, PacketDestination destination) {
-        proxyClient.setGroupLeader(0);
+        if (destination == PacketDestination.CLIENT) proxyClient.setGroupLeader(0);
         return true;
     }
 }
