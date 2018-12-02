@@ -112,6 +112,7 @@ public class ProxyClient {
 
     public void switchToGame(String ip, int port) {
         log.info("Switching to game server " + ip + ":" + port);
+        log.debug("Auth ticket: " + authTicket);
         state = ProxyClientState.SERVER_CONNECTING;
         connectGame(ip, port);
     }

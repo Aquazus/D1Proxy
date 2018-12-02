@@ -78,6 +78,7 @@ public class Proxy {
         log.info("Registering handlers...");
         handlers = Collections.synchronizedMap(new HashMap<>());
         addHandler("AXK", new AXKHandler(this)); //<-- Selected server address + client ticket
+        addHandler("AYK", new AYKHandler()); //<-- Selected server address + client ticket
         addHandler("Im", new ImHandler(this)); //<-- Ingame message from lang files
         addHandler("BM", new BMHandler()); //--> Chat message
         addHandler("ASK", new ASKHandler(this)); //<-- Character name
@@ -106,6 +107,8 @@ public class Proxy {
         addCommand("plugins", new PluginsCommand(this));
         addCommand("autoready", new AutoreadyCommand());
         addCommand("autojoin", new AutojoinCommand());
+        if (ProxyConfiguration.proxyDebug) addCommand("send", new SendCommand());
+        if (ProxyConfiguration.proxyDebug) addCommand("receive", new ReceiveCommand());
         log.info(commands.size() + " commands registered!");
     }
 
