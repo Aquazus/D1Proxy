@@ -18,6 +18,7 @@ public @Data class ProxyConfiguration {
     protected boolean proxySniffing;
     protected TimeZone proxyTimeZone;
     protected SimpleDateFormat fullDateFormat;
+    protected String proxyPrefix;
 
     protected String dofusIp;
     protected int dofusPort;
@@ -40,6 +41,7 @@ public @Data class ProxyConfiguration {
             this.proxyTimeZone = TimeZone.getTimeZone(properties.getProperty("proxy.timezone"));
             this.fullDateFormat = new SimpleDateFormat("dd/MM/YY à HH:mm:ss");
             this.fullDateFormat.setTimeZone(this.proxyTimeZone);
+            this.proxyPrefix = properties.getProperty("proxy.prefix");
             this.dofusIp = properties.getProperty("dofus.ip");
             this.dofusPort = Integer.parseInt(properties.getProperty("dofus.port"));
             this.dofusMapsCdn = properties.getProperty("dofus.mapscdn");

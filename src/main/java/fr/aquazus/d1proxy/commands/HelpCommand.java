@@ -20,7 +20,8 @@ public class HelpCommand implements Command {
     public void execute(ProxyClient proxyClient, String args) {
         StringBuilder helpBuilder = new StringBuilder("<b><u>Commandes :</u></b>");
         for (Map.Entry<String, Command> command : proxy.getCommands().entrySet()) {
-            helpBuilder.append("\n<b>.");
+            helpBuilder.append("\n<b>");
+            helpBuilder.append(proxy.getConfiguration().getProxyPrefix());
             helpBuilder.append(command.getKey());
             helpBuilder.append("</b> - ");
             helpBuilder.append(command.getValue().getDescription());

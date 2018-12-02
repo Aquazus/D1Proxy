@@ -28,7 +28,7 @@ public class AntiafkCommand implements Command, Runnable {
     @Override
     public void execute(ProxyClient proxyClient, String args) {
         if (args.isBlank()) {
-            proxyClient.sendMessage("<b>Utilisation :</b> .antiafk on/off");
+            proxyClient.sendMessage("<b>Utilisation :</b> " + proxy.getConfiguration().getProxyPrefix() + "antiafk on/off");
             return;
         }
         if (args.split(" ")[0].toLowerCase().equalsIgnoreCase("off")) {
@@ -38,7 +38,7 @@ public class AntiafkCommand implements Command, Runnable {
             proxyClient.sendMessage(proxyClient.isAntiAfkEnabled() ? "L'antiafk est déjà activé" : "L'antiafk est désormais <b>activé</b>");
             proxyClient.setAntiAfkEnabled(true);
         } else {
-            proxyClient.sendMessage("<b>Utilisation :</b> .antiafk on/off");
+            proxyClient.sendMessage("<b>Utilisation :</b> " + proxy.getConfiguration().getProxyPrefix() + "antiafk on/off");
         }
     }
 

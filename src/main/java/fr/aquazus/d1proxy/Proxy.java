@@ -80,7 +80,7 @@ public class Proxy {
         addHandler("AXK", new AXKHandler(this)); //<-- Selected server address + client ticket
         addHandler("AYK", new AYKHandler()); //<-- Selected server address + client ticket
         addHandler("Im", new ImHandler(this)); //<-- Ingame message from lang files
-        addHandler("BM", new BMHandler()); //--> Chat message
+        addHandler("BM", new BMHandler(this)); //--> Chat message
         addHandler("ASK", new ASKHandler(this)); //<-- Character name
         addHandler("GDM", new GDMHandler(this)); //<-- Map data
         addHandler("Ax", new AxHandler()); //--> Cache OK, request character list
@@ -102,13 +102,13 @@ public class Proxy {
         addCommand("all", new AllCommand(this));
         if (configuration.isProxySniffing()) addCommand("mapinfo", new MapinfoCommand(this));
         if (configuration.isMongoEnabled()) addCommand("profile", new ProfileCommand(this));
-        addCommand("autoskip", new AutoskipCommand());
+        addCommand("autoskip", new AutoskipCommand(this));
         addCommand("antiafk", new AntiafkCommand(this));
         addCommand("plugins", new PluginsCommand(this));
-        addCommand("autoready", new AutoreadyCommand());
-        addCommand("autojoin", new AutojoinCommand());
-        if (ProxyConfiguration.proxyDebug) addCommand("send", new SendCommand());
-        if (ProxyConfiguration.proxyDebug) addCommand("receive", new ReceiveCommand());
+        addCommand("autoready", new AutoreadyCommand(this));
+        addCommand("autojoin", new AutojoinCommand(this));
+        if (ProxyConfiguration.proxyDebug) addCommand("send", new SendCommand(this));
+        if (ProxyConfiguration.proxyDebug) addCommand("receive", new ReceiveCommand(this));
         log.info(commands.size() + " commands registered!");
     }
 

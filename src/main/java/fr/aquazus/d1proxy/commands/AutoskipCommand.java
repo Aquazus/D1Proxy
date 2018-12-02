@@ -1,5 +1,6 @@
 package fr.aquazus.d1proxy.commands;
 
+import fr.aquazus.d1proxy.Proxy;
 import fr.aquazus.d1proxy.network.ProxyClient;
 import lombok.Getter;
 
@@ -7,11 +8,16 @@ public class AutoskipCommand implements Command {
 
     @Getter
     private String description = "Fait passer vos tours automatiquement";
+    private final Proxy proxy;
+
+    public AutoskipCommand(Proxy proxy) {
+        this.proxy = proxy;
+    }
 
     @Override
     public void execute(ProxyClient proxyClient, String args) {
         if (args.isBlank()) {
-            proxyClient.sendMessage("<b>Utilisation :</b> .autoskip on/off");
+            proxyClient.sendMessage("<b>Utilisation :</b> " + proxy.getConfiguration().getProxyPrefix() + "autoskip on/off");
             return;
         }
         if (args.split(" ")[0].toLowerCase().equalsIgnoreCase("off")) {
@@ -21,7 +27,7 @@ public class AutoskipCommand implements Command {
             proxyClient.sendMessage(proxyClient.isAutoSkipEnabled() ? "Vous êtes déjà en mode autoskip" : "Le mode autoskip est désormais <b>activé</b>");
             proxyClient.setAutoSkipEnabled(true);
         } else {
-            proxyClient.sendMessage("<b>Utilisation :</b> .autoskip on/off");
+            proxyClient.sendMessage("<b>Utilisation :</b> " + proxy.getConfiguration().getProxyPrefix() + "autoskip on/off");
         }
     }
 }

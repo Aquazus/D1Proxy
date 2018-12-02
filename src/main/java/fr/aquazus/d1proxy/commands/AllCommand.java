@@ -19,10 +19,10 @@ public class AllCommand implements Command {
     @Override
     public void execute(ProxyClient proxyClient, String args) {
         if (args.isBlank()) {
-            proxyClient.sendMessage("<b>Utilisation</b> : .all [message]");
+            proxyClient.sendMessage("<b>Utilisation</b> : " + proxy.getConfiguration().getProxyPrefix() + "all [message]");
             return;
         }
         proxy.sendMessage("<b>" + proxyClient.getUsername() + "</b> : " + args);
-        proxyClient.log("[.all] " + args);
+        proxyClient.log("[" + proxy.getConfiguration().getProxyPrefix() + "all] " + args);
     }
 }
