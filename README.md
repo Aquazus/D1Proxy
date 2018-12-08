@@ -1,4 +1,4 @@
-<a href="https://github.com/Aquazus/D1Proxy"><img src="https://vgy.me/QCL9sT.jpg" width="33%" title="D1Proxy" alt="D1Proxy"></a>
+<a href="https://github.com/Aquazus/D1Proxy"><img src="https://vgy.me/QCL9sT.jpg" width="33%" title="Art by @mofumanju" alt="Art by @mofumanju"></a>
 
 # D1Proxy
 
