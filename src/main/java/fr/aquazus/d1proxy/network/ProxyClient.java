@@ -12,6 +12,7 @@ import simplenet.packet.Packet;
 
 import java.io.*;
 import java.nio.charset.StandardCharsets;
+import java.util.Arrays;
 
 @Slf4j
 public class ProxyClient {
@@ -85,7 +86,7 @@ public class ProxyClient {
                 String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
                 clientStream.reset();
                 this.log("--> " + packet.substring(0, packet.length() - 1));
-                if (server.getChannel().isOpen() && shouldForward(packet, PacketDestination.SERVER)) splitAndFlush(packet, server);
+                if (server.getChannel().isOpen() && shouldForward(packet, PacketDestination.SERVER)) sendPacket(packet, server);
                 return;
             }
             clientStream.write(data);
@@ -103,7 +104,7 @@ public class ProxyClient {
                 String packet = new String(gameStream.toByteArray(), StandardCharsets.UTF_8);
                 gameStream.reset();
                 this.log("<-- " + packet);
-                if (client.getChannel().isOpen() && shouldForward(packet, PacketDestination.CLIENT)) splitAndFlush(packet, client);
+                if (client.getChannel().isOpen() && shouldForward(packet, PacketDestination.CLIENT)) sendPacket(packet, client);
                 return;
             }
             gameStream.write(data);
@@ -181,33 +182,14 @@ public class ProxyClient {
         }
     }
 
-    private void splitAndFlush(String packet, Client destination) {
+    private void sendPacket(String packet, Client destination) {
         try {
-            StringReader reader = new StringReader(packet);
-            ByteArrayOutputStream buffer = new ByteArrayOutputStream(2048);
-            OutputStreamWriter writer = new OutputStreamWriter(buffer, StandardCharsets.UTF_8);
-            char[] cbuf = new char[1024];
-            byte[] tempBuf;
-            int len;
-            while ((len = reader.read(cbuf, 0, cbuf.length)) > 0) {
-                writer.write(cbuf, 0, len);
-                writer.flush();
-                if (buffer.size() >= 1024) {
-                    tempBuf = buffer.toByteArray();
-                    Packet.builder().putBytes(buffer.toByteArray()).writeAndFlush(destination);
-                    buffer.reset();
-                    if (tempBuf.length > 1024) {
-                        buffer.write(tempBuf, 1024, tempBuf.length - 1024);
-                    }
-                }
+            byte[] data = (packet + "\0").getBytes(StandardCharsets.UTF_8);
+            this.log("--> " + packet);
+            for (int bound = 0; bound < data.length; bound += 1024) {
+                int end = Math.min(data.length, bound + 1024);
+                Packet.builder().putBytes(Arrays.copyOfRange(data, bound, end)).writeAndFlush(destination);
             }
-            if (buffer.size() >= 1024) {
-                Packet.builder().putBytes(buffer.toByteArray()).writeAndFlush(destination);
-                Packet.builder().putByte(0).writeAndFlush(destination);
-            } else {
-                Packet.builder().putBytes(buffer.toByteArray()).putByte(0).writeAndFlush(destination);
-            }
-
         } catch (Exception ex) {
             log.error("An error occurred while splitting a packet", ex);
         }
