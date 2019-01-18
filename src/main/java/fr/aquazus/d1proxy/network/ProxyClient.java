@@ -54,7 +54,7 @@ public class ProxyClient {
     }
 
     private void connectAuth() {
-        Client authServer = new Client(2048);
+        Client authServer = new Client(1024);
         authServer.onConnect(() -> {
             this.log("auth tunnel opened!");
             server = authServer;
@@ -66,7 +66,7 @@ public class ProxyClient {
     }
 
     private void connectGame(String ip, int port) {
-        Client gameServer = new Client(2048);
+        Client gameServer = new Client(1024);
         gameServer.onConnect(() -> {
             this.log("game tunnel opened!");
             server = gameServer;

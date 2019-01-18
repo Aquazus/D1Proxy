@@ -114,7 +114,7 @@ public class Proxy {
 
     private void startServer() {
         log.info("Starting proxy server...");
-        Server server = new Server(2048);
+        Server server = new Server(1024);
         server.bind(configuration.getProxyIp(), configuration.getProxyPort());
         server.onConnect(client -> {
             String clientIp;
