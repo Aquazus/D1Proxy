@@ -29,16 +29,9 @@ public class GtHandler implements PacketHandler {
         String[] extraData = packet.substring(2).split("\\|");
         int id = Integer.parseInt(extraData[0]);
         ProxyClient client = proxy.getClientByCharacterId(id);
-        if (client != null && client.isAutoJoinEnabled() && client.getCharacterId() != proxyClient.getCharacterId() && client.getGroupLeader() == proxyClient.getGroupLeader() && client.getIp().equals(proxyClient.getIp())) {
+        if (client != null && client.isAutoJoinEnabled() && client.getCharacterId() != proxyClient.getCharacterId() && client.getGroupLeader() == proxyClient.getGroupLeader() && client.getIp().equals(proxyClient.getIp()) && packet.contains(client.getUsername())) {
             String joinPacket = "GA903" + id + ";" + id;
-            scheduler.execute(() -> {
-                try {
-                    Thread.sleep(ThreadLocalRandom.current().nextInt(1000, 3000));
-                    Packet.builder().putBytes(joinPacket.getBytes(StandardCharsets.UTF_8)).putByte(10).putByte(0).writeAndFlush(proxyClient.getServer());
-                } catch (Exception ex) {
-                    log.error("An error occurred while executing a game action", ex);
-                }
-            });
+            Packet.builder().putBytes(joinPacket.getBytes(StandardCharsets.UTF_8)).putByte(10).putByte(0).writeAndFlush(proxyClient.getServer());
         }
         return true;
     }
