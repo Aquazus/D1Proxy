@@ -5,6 +5,8 @@ import fr.aquazus.d1proxy.network.ProxyClient;
 import lombok.Getter;
 import simplenet.packet.Packet;
 
+import java.nio.charset.StandardCharsets;
+
 public class ReceiveCommand implements Command {
 
     @Getter
@@ -21,6 +23,6 @@ public class ReceiveCommand implements Command {
             proxyClient.sendMessage("<b>Utilisation</b> : " + proxy.getConfiguration().getProxyPrefix() + "receive [packet]");
             return;
         }
-        Packet.builder().putBytes(args.getBytes()).putByte(0).writeAndFlush(proxyClient.getClient());
+        Packet.builder().putBytes(args.getBytes(StandardCharsets.UTF_8)).putByte(0).writeAndFlush(proxyClient.getClient());
     }
 }

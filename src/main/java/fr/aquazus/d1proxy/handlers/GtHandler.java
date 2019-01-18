@@ -5,6 +5,7 @@ import fr.aquazus.d1proxy.network.ProxyClient;
 import lombok.extern.slf4j.Slf4j;
 import simplenet.packet.Packet;
 
+import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
@@ -33,7 +34,7 @@ public class GtHandler implements PacketHandler {
             scheduler.execute(() -> {
                 try {
                     Thread.sleep(ThreadLocalRandom.current().nextInt(1000, 3000));
-                    Packet.builder().putBytes(joinPacket.getBytes()).putByte(10).putByte(0).writeAndFlush(proxyClient.getServer());
+                    Packet.builder().putBytes(joinPacket.getBytes(StandardCharsets.UTF_8)).putByte(10).putByte(0).writeAndFlush(proxyClient.getServer());
                 } catch (Exception ex) {
                     log.error("An error occurred while executing a game action", ex);
                 }

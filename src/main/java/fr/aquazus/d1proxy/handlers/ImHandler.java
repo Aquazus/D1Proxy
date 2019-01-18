@@ -5,6 +5,8 @@ import fr.aquazus.d1proxy.network.ProxyClient;
 import fr.aquazus.d1proxy.network.ProxyClientState;
 import simplenet.packet.Packet;
 
+import java.nio.charset.StandardCharsets;
+
 public class ImHandler implements PacketHandler {
 
     private final Proxy proxy;
@@ -17,7 +19,7 @@ public class ImHandler implements PacketHandler {
     public boolean shouldForward(ProxyClient proxyClient, String packet, PacketDestination destination) {
         if (packet.startsWith("Im0153;")) {
             proxyClient.setState(ProxyClientState.INGAME);
-            Packet.builder().putBytes(packet.getBytes()).putByte(0).writeAndFlush(proxyClient.getClient());
+            Packet.builder().putBytes(packet.getBytes(StandardCharsets.UTF_8)).putByte(0).writeAndFlush(proxyClient.getClient());
             proxyClient.sendMessage("Bienvenue sur D1Proxy " + proxy.getVersion() + " !");
             return false;
         }
