@@ -3,6 +3,7 @@ package fr.aquazus.d1proxy;
 import fr.aquazus.d1proxy.commands.*;
 import fr.aquazus.d1proxy.database.ProxyDatabase;
 import fr.aquazus.d1proxy.handlers.*;
+import fr.aquazus.d1proxy.logging.UncaughtExceptionLogger;
 import fr.aquazus.d1proxy.network.ProxyCipher;
 import fr.aquazus.d1proxy.network.ProxyClient;
 import fr.aquazus.d1proxy.network.ProxyClientState;
@@ -25,6 +26,7 @@ public class Proxy {
     }
 
     public static void main(String[] args) {
+        Thread.setDefaultUncaughtExceptionHandler(new UncaughtExceptionLogger());
         Proxy.getInstance().init();
     }
 
