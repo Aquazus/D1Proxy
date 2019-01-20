@@ -85,7 +85,7 @@ public class ProxyClient {
             if (data == (byte) 0) {
                 String packet = new String(clientStream.toByteArray(), StandardCharsets.UTF_8);
                 clientStream.reset();
-                this.log("--> " + packet.substring(0, packet.length() - 1));
+                this.log("--> " + (packet.length() > 1 ? packet.substring(0, packet.length() - 1) : ""));
                 if (server.getChannel().isOpen() && shouldForward(packet, PacketDestination.SERVER)) sendPacket(packet, server);
                 return;
             }
