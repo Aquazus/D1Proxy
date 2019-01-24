@@ -11,5 +11,5 @@ if not "%jver:~0,2%" == "11" (
    pause
    exit /b
 )
-java -jar d1proxy-1.10.2-jar-with-dependencies.jar
+java -jar d1proxy-1.10.3-jar-with-dependencies.jar
 pause
