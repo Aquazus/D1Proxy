@@ -184,7 +184,6 @@ public class ProxyClient {
     private void sendPacket(String packet, Client destination) {
         try {
             byte[] data = (packet + "\0").getBytes(StandardCharsets.UTF_8);
-            this.log("--> " + packet);
             for (int bound = 0; bound < data.length; bound += 1024) {
                 int end = Math.min(data.length, bound + 1024);
                 Packet.builder().putBytes(Arrays.copyOfRange(data, bound, end)).writeAndFlush(destination);
