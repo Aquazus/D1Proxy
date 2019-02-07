@@ -9,6 +9,7 @@ import java.nio.charset.StandardCharsets;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.ThreadLocalRandom;
+import java.util.concurrent.TimeUnit;
 
 @Slf4j
 public class GtHandler implements PacketHandler {
@@ -31,7 +32,9 @@ public class GtHandler implements PacketHandler {
         ProxyClient client = proxy.getClientByCharacterId(id);
         if (client != null && client.isAutoJoinEnabled() && client.getCharacterId() != proxyClient.getCharacterId() && client.getGroupLeader() == proxyClient.getGroupLeader() && client.getIp().equals(proxyClient.getIp()) && packet.contains(client.getUsername())) {
             String joinPacket = "GA903" + id + ";" + id;
-            Packet.builder().putBytes(joinPacket.getBytes(StandardCharsets.UTF_8)).putByte(10).putByte(0).writeAndFlush(proxyClient.getServer());
+            Executors.newSingleThreadScheduledExecutor().schedule(() -> {
+                Packet.builder().putBytes(joinPacket.getBytes(StandardCharsets.UTF_8)).putByte(10).putByte(0).writeAndFlush(proxyClient.getServer());
+            }, ThreadLocalRandom.current().nextInt(1000, 4000), TimeUnit.MILLISECONDS);
         }
         return true;
     }
