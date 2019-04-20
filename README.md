@@ -123,4 +123,4 @@ Bitcoin: `1JeSvkGhB6k81kDkUvxTizQTrf88P6fHaR`
 [![License](https://img.shields.io/github/license/Aquazus/D1Proxy.svg?style=flat-square)](LICENSE)
 
 - **[AGPL-3.0 license](https://opensource.org/licenses/AGPL-3.0)**
-- Copyright 2018 © <a href="http://github.com/Aquazus" target="_blank">Aquazus</a>.
+- Copyright 2018-2019 © <a href="http://github.com/Aquazus" target="_blank">Aquazus</a>.
