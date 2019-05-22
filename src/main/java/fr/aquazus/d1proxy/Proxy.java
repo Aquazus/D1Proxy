@@ -35,8 +35,6 @@ public class Proxy {
     @Getter
     private ProxyConfiguration configuration;
     @Getter
-    private ProxyCipher proxyCipher;
-    @Getter
     private ProxyDatabase database;
     @Getter
     private ProxyPluginManager pluginManager;
@@ -64,7 +62,6 @@ public class Proxy {
             log.warn("Sniffing mode is enabled but mongo is disabled. Sniffing mode requires Mongo. Disabling sniffing mode.");
             configuration.setProxySniffing(false);
         }
-        proxyCipher = new ProxyCipher();
         registerHandlers();
         registerCommands();
         if (configuration.isMongoEnabled()) {
@@ -79,7 +76,7 @@ public class Proxy {
     private void registerHandlers() {
         log.info("Registering handlers...");
         handlers = Collections.synchronizedMap(new HashMap<>());
-        addHandler("AXK", new AXKHandler(this)); //<-- Selected server address + client ticket
+        addHandler("AXK", new AXKHandler()); //<-- Selected server address + client ticket
         addHandler("AYK", new AYKHandler()); //<-- Selected server address + client ticket
         addHandler("Im", new ImHandler(this)); //<-- Ingame message from lang files
         addHandler("BM", new BMHandler(this)); //--> Chat message
