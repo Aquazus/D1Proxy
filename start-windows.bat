@@ -14,5 +14,5 @@ if not "%jver:~0,2%" == "11" (
    pause
    exit /b
 )
-java -Dfile.encoding=UTF-8 -jar d1proxy-1.10.4.jar
+java -Dfile.encoding=UTF-8 -jar d1proxy-1.10.5.jar
 pause
