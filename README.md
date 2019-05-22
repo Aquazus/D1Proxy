@@ -6,7 +6,7 @@
 
 [![Maintainability](https://img.shields.io/codeclimate/maintainability/Aquazus/D1Proxy.svg?style=flat-square)](https://codeclimate.com/github/Aquazus/D1Proxy/maintainability) [![Dependencies](https://img.shields.io/librariesio/github/Aquazus/D1Proxy.svg?style=flat-square)](http://libraries.io/github/Aquazus/D1Proxy) [![Github Issues](https://img.shields.io/github/issues-raw/Aquazus/D1Proxy.svg?style=flat-square)](https://github.com/Aquazus/D1Proxy/issues) [![Pending Pull-Requests](https://img.shields.io/github/issues-pr-raw/Aquazus/D1Proxy.svg?style=flat-square)](https://github.com/Aquazus/D1Proxy/pulls) [![License](https://img.shields.io/github/license/Aquazus/D1Proxy.svg?style=flat-square)](LICENSE)
 
-[![D1Proxy](http://i.imgur.com/1ea3B0e.png)](#)
+[![D1Proxy](https://i.vgy.me/Glb2El.png)](#)
 
 ---
 
