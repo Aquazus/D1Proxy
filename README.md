@@ -34,7 +34,7 @@
 ### Compile
 
 - Import the project using the pom.xml into your favorite IDE and run a Maven `package` goal
-- You will find the jar file inside the `target` folder, named `d1proxy-<version>-jar-with-dependencies.jar`
+- You will find the jar file inside the `target` folder, named `d1proxy-<version>.jar`
 
 ### Setup
 
@@ -82,6 +82,7 @@
 | :---: |
 | [![Aquazus](https://avatars1.githubusercontent.com/u/7611808?v=3&s=200)](https://github.com/Aquazus) |
 | <a href="https://github.com/Aquazus" target="_blank">`github.com/Aquazus`</a> |
+
 ---
 
 ## FAQ
@@ -104,17 +105,6 @@ Reach out to me at one of the following places!
 
 - Twitter at <a href="http://twitter.com/Aquazus" target="_blank">`@Aquazus`</a>
 - Discord at <a href="https://discord.gg/xUEpc5N" target="_blank">`discord.gg/xUEpc5N`</a>
-
----
-
-## Donations
-
-[![Liberapay receiving](http://img.shields.io/liberapay/receives/Aquazus.svg?logo=liberapay&style=flat-square)](https://liberapay.com/Aquazus/) [![Liberapay patrons](http://img.shields.io/liberapay/patrons/Aquazus.svg?logo=liberapay&style=flat-square)](https://liberapay.com/Aquazus/)
-
-[![Donate using Liberapay](https://liberapay.com/assets/widgets/donate.svg)](https://liberapay.com/Aquazus/)
-
-Bitcoin: `1JeSvkGhB6k81kDkUvxTizQTrf88P6fHaR`
-
 
 ---
 
