@@ -16,12 +16,11 @@ public class AntiafkCommand implements Command, Runnable {
     @Getter
     private String description = "Empêche le serveur de vous kick pour afk";
     private Proxy proxy;
-    private ScheduledExecutorService scheduler;
 
     public AntiafkCommand(Proxy proxy) {
         this.proxy = proxy;
         log.debug("Starting the Antiafk scheduler...");
-        scheduler = Executors.newSingleThreadScheduledExecutor();
+        ScheduledExecutorService scheduler = Executors.newSingleThreadScheduledExecutor();
         scheduler.scheduleAtFixedRate(this, 5, 5, TimeUnit.MINUTES);
     }
 

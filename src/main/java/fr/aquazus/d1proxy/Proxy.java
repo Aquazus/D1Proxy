@@ -4,7 +4,6 @@ import fr.aquazus.d1proxy.commands.*;
 import fr.aquazus.d1proxy.database.ProxyDatabase;
 import fr.aquazus.d1proxy.handlers.*;
 import fr.aquazus.d1proxy.logging.UncaughtExceptionLogger;
-import fr.aquazus.d1proxy.network.ProxyCipher;
 import fr.aquazus.d1proxy.network.ProxyClient;
 import fr.aquazus.d1proxy.network.ProxyClientState;
 import fr.aquazus.d1proxy.plugins.ProxyPluginManager;
@@ -85,9 +84,9 @@ public class Proxy {
         addHandler("Ax", new AxHandler()); //--> Cache OK, request character list
         addHandler("GP", new GPHandler(this)); //<-- Fight cells & team id
         addHandler("GTS", new GTSHandler()); //<-- Game Turn Start
-        addHandler("HG", new HGHandler(this)); //<-- Hello Game
-        addHandler("PL", new PLHandler(this)); //<-- Group Leader
-        addHandler("PV", new PVHandler(this)); //<-> Leave Group
+        addHandler("HG", new HGHandler()); //<-- Hello Game
+        addHandler("PL", new PLHandler()); //<-- Group Leader
+        addHandler("PV", new PVHandler()); //<-> Leave Group
         addHandler("GR1", new GR1Handler(this)); //<-> Character Ready
         addHandler("Gt", new GtHandler(this)); //<-- Fight created on map
         log.info(handlers.size() + " packets handled!");

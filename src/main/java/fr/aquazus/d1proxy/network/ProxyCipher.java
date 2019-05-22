@@ -24,6 +24,7 @@ public class ProxyCipher {
         return int2ip(ip) + ":" + port;
     }
 
+    @SuppressWarnings("unused")
     public static String encodeAXK(String ipPort) {
         int indx = ipPort.indexOf(':');
         int ip = ip2int(ipPort.substring(0, indx));
@@ -54,6 +55,7 @@ public class ProxyCipher {
         return cells;
     }
 
+    @SuppressWarnings("unused")
     public static LinkedHashMap<Integer, Integer> extractFullPath(String compressedData, int mapSize) {
         LinkedHashMap<Integer, Integer> fullPath = new LinkedHashMap<>();
         char[] data = compressedData.toCharArray();

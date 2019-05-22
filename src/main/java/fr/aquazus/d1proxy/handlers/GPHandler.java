@@ -16,7 +16,7 @@ public class GPHandler implements PacketHandler {
     @Override
     public boolean shouldForward(ProxyClient proxyClient, String packet, PacketDestination destination) {
         if (!proxy.getConfiguration().isProxySniffing() || packet.length() < 4) return true;
-        String extraData[] = packet.substring(2).split("\\|");
+        String[] extraData = packet.substring(2).split("\\|");
         if (proxy.getDatabase().getMapsCollection().mapHasFightCells(proxyClient.getCurrentMap())) {
             return true;
         }

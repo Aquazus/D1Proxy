@@ -136,19 +136,20 @@ public class ProxyClient {
             return true;
         }
 
-        boolean forward = true;
+        boolean forward;
 
         String id = packet.substring(0, 2);
-        forward = isForwarded(packet, destination, forward, id);
+        forward = isForwarded(packet, destination, id);
 
         if (packet.length() > 2) {
             String longerId = packet.substring(0, 3);
-            forward = isForwarded(packet, destination, forward, longerId);
+            forward = isForwarded(packet, destination, longerId);
         }
         return forward;
     }
 
-    private boolean isForwarded(String packet, PacketDestination destination, boolean forward, String id) {
+    private boolean isForwarded(String packet, PacketDestination destination, String id) {
+        boolean forward = true;
         if (proxy.getHandlers().containsKey(id)) {
             for (PacketHandler handlers : proxy.getHandlers().get(id)) {
                 if (!handlers.shouldForward(this, packet, destination)) {

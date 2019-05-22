@@ -6,19 +6,14 @@ import lombok.extern.slf4j.Slf4j;
 import simplenet.packet.Packet;
 
 import java.nio.charset.StandardCharsets;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.ThreadLocalRandom;
 
 @Slf4j
 public class GtHandler implements PacketHandler {
 
     private final Proxy proxy;
-    private ExecutorService scheduler;
 
     public GtHandler(Proxy proxy) {
         this.proxy = proxy;
-        this.scheduler = Executors.newCachedThreadPool();
     }
 
     @Override

@@ -5,8 +5,6 @@ import fr.aquazus.d1proxy.network.ProxyClient;
 import fr.aquazus.d1proxy.plugins.ProxyPlugin;
 import lombok.Getter;
 
-import java.util.Map;
-
 public class PluginsCommand implements Command {
 
     @Getter
