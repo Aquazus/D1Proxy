@@ -5,6 +5,8 @@ import com.mongodb.client.MongoCollection;
 import org.bson.Document;
 import org.bson.conversions.Bson;
 
+import java.util.Objects;
+
 import static com.mongodb.client.model.Filters.*;
 
 public class MapsCollection {
@@ -44,5 +46,9 @@ public class MapsCollection {
 
     public long countMaps(Bson filter) {
         return collection.countDocuments(filter);
+    }
+
+    public String getMapDate(int mapId) {
+        return Objects.requireNonNull(collection.find(eq("id", mapId)).first()).getString("date");
     }
 }
