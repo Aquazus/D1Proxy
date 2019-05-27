@@ -29,8 +29,16 @@ public class GDMHandler implements PacketHandler {
         if (!proxy.getDatabase().getMapsCollection().mapExists(mapId)) {
             proxy.getDatabase().getMapsCollection().insertNewMap(mapId, proxyClient.getUsername(), mapDate, mapKey);
             proxy.sendMessage("<b>" + proxyClient.getUsername() + "</b> a découvert une nouvelle map ! <i>(ID: " + mapId + ")</i>");
-        } else if (!proxy.getDatabase().getMapsCollection().getMapDate(mapId).equals(mapDate)) {
-            proxy.getDatabase().getMapsCollection().updateMap(mapId, new Document().append("date", mapDate).append("key", mapKey));
+        } else {
+            String storedMapDate = proxy.getDatabase().getMapsCollection().getMapDate(mapId);
+            if (!storedMapDate.equals(mapDate)) {
+                proxy.getDatabase().getMapsCollection().updateMap(mapId, new Document().append("date", mapDate).append("key", mapKey));
+                try {
+                    deleteMapFile(mapId + "_" + storedMapDate + (mapKey.isBlank() ? ".swf" : "X.swf"));
+                } catch (Exception ex) {
+                    log.error("An error occurred while deleting a map file.", ex);
+                }
+            }
         }
         try {
             downloadMapFile(mapId + "_" + mapDate + (mapKey.isBlank() ? ".swf" : "X.swf"));
@@ -78,5 +86,10 @@ public class GDMHandler implements PacketHandler {
                 return stream;
             }
         });
+    }
+
+    private boolean deleteMapFile(String fileName) throws Exception {
+        File mapFile = new File("maps/" + fileName);
+        return mapFile.delete();
     }
 }
